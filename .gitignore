@@ -1,0 +1,5 @@
+PrismStructure/node_modules/
+PrismStructure/test-results/
+PrismStructure/playwright-report/
+.env
+.DS_Store

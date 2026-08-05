@@ -1,0 +1,16 @@
+{
+  "name": "qa-ai-practical-assessment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QA AI assessment — run Playwright from PrismStructure",
+  "scripts": {
+    "postinstall": "npm install --prefix PrismStructure",
+    "test": "npm run test --prefix PrismStructure --",
+    "test:smoke": "npm run test:smoke --prefix PrismStructure --",
+    "test:regression": "npm run test:regression --prefix PrismStructure --",
+    "test:ui": "npm run test:ui --prefix PrismStructure --",
+    "test:api": "npm run test:api --prefix PrismStructure --",
+    "test:headed": "npm run test --prefix PrismStructure -- --headed",
+    "report": "npm run report --prefix PrismStructure"
+  }
+}
