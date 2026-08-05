@@ -11,6 +11,6 @@
     "test:ui": "npm run test:ui --prefix PrismStructure --",
     "test:api": "npm run test:api --prefix PrismStructure --",
     "test:headed": "npm run test --prefix PrismStructure -- --headed",
-    "report": "npm run report --prefix PrismStructure"
+    "report": "npm --prefix PrismStructure run report"
   }
 }

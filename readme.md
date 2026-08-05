@@ -67,7 +67,7 @@ npm run test:smoke
 npm run test:regression
 npm run test:ui
 npm run test:api
-npm run report
+npm run report               # opens HTML report (must run after npm test)
 ```
 
 Or from `PrismStructure/` directly:
@@ -78,10 +78,14 @@ npm install
 npx playwright install chromium
 npm test
 npm run test -- --headed
+npm run report
 ```
 
-Reports: `PrismStructure/execution-reports/html-report/index.html`  
-JSON: `PrismStructure/execution-reports/results.json`
+Reports (open in browser if `npm run report` fails):  
+- HTML: `PrismStructure/execution-reports/html-report/index.html`  
+- JSON: `PrismStructure/execution-reports/results.json`
+
+> If you see `No report found at "execution-reports/html-report"`, you are in the wrong folder. Run `cd PrismStructure && npm run report`, or open the `index.html` path above.
 
 **Known SUT behavior:** press **Confirm twice** on Cash on Delivery to generate an invoice.
 

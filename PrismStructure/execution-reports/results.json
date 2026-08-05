@@ -119,7 +119,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 13468,
+                      "duration": 13496,
                       "errors": [],
                       "stdout": [
                         {
@@ -131,7 +131,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:24:37.110Z",
+                      "startTime": "2026-08-05T16:52:13.625Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -162,7 +162,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 9597,
+                      "duration": 10003,
                       "errors": [],
                       "stdout": [
                         {
@@ -174,7 +174,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:24:51.483Z",
+                      "startTime": "2026-08-05T16:52:27.850Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -205,7 +205,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8416,
+                      "duration": 7723,
                       "errors": [],
                       "stdout": [
                         {
@@ -217,7 +217,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:25:01.089Z",
+                      "startTime": "2026-08-05T16:52:37.866Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -248,7 +248,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2104,
+                      "duration": 2186,
                       "errors": [],
                       "stdout": [
                         {
@@ -257,7 +257,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:25:09.516Z",
+                      "startTime": "2026-08-05T16:52:45.597Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -305,7 +305,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 36085,
+                      "duration": 43675,
                       "errors": [],
                       "stdout": [
                         {
@@ -317,7 +317,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:25:11.637Z",
+                      "startTime": "2026-08-05T16:52:47.802Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -348,7 +348,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 46448,
+                      "duration": 77346,
                       "errors": [],
                       "stdout": [
                         {
@@ -360,7 +360,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:25:47.731Z",
+                      "startTime": "2026-08-05T16:53:31.486Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -370,7 +370,7 @@
               ],
               "id": "2f3865579c368307f68a-4d7b2bdb9a18c3bce37a",
               "file": "UI Test/02_cartCheckoutTest.spec.js",
-              "line": 40,
+              "line": 42,
               "column": 3
             },
             {
@@ -391,7 +391,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 43808,
+                      "duration": 55726,
                       "errors": [],
                       "stdout": [
                         {
@@ -403,7 +403,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:26:34.190Z",
+                      "startTime": "2026-08-05T16:54:48.844Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -413,7 +413,7 @@
               ],
               "id": "2f3865579c368307f68a-8dd510a07e1dedd6d801",
               "file": "UI Test/02_cartCheckoutTest.spec.js",
-              "line": 62,
+              "line": 63,
               "column": 3
             },
             {
@@ -434,7 +434,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 39709,
+                      "duration": 43309,
                       "errors": [],
                       "stdout": [
                         {
@@ -446,7 +446,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:27:18.009Z",
+                      "startTime": "2026-08-05T16:55:44.579Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -473,7 +473,7 @@
         {
           "title": "API-AC1 User Authentication & Cart Creation",
           "file": "API Test/01_authCartTest.spec.js",
-          "line": 23,
+          "line": 13,
           "column": 6,
           "specs": [
             {
@@ -494,7 +494,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2583,
+                      "duration": 2576,
                       "errors": [],
                       "stdout": [
                         {
@@ -509,7 +509,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:27:58.744Z",
+                      "startTime": "2026-08-05T16:56:29.100Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -519,7 +519,7 @@
               ],
               "id": "733202ee342aef7e5e31-90829a7fe8f7534d3792",
               "file": "API Test/01_authCartTest.spec.js",
-              "line": 24,
+              "line": 14,
               "column": 3
             },
             {
@@ -540,7 +540,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1942,
+                      "duration": 1680,
                       "errors": [],
                       "stdout": [
                         {
@@ -552,7 +552,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:01.354Z",
+                      "startTime": "2026-08-05T16:56:31.700Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -562,7 +562,7 @@
               ],
               "id": "733202ee342aef7e5e31-5b1a9ca37c262b942520",
               "file": "API Test/01_authCartTest.spec.js",
-              "line": 48,
+              "line": 38,
               "column": 3
             },
             {
@@ -583,7 +583,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1681,
+                      "duration": 1623,
                       "errors": [],
                       "stdout": [
                         {
@@ -595,7 +595,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:03.305Z",
+                      "startTime": "2026-08-05T16:56:33.392Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -605,7 +605,7 @@
               ],
               "id": "733202ee342aef7e5e31-477cc8845d2b86567f85",
               "file": "API Test/01_authCartTest.spec.js",
-              "line": 59,
+              "line": 49,
               "column": 3
             },
             {
@@ -626,7 +626,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 703,
+                      "duration": 639,
                       "errors": [],
                       "stdout": [
                         {
@@ -635,7 +635,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:04.996Z",
+                      "startTime": "2026-08-05T16:56:35.025Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -645,7 +645,7 @@
               ],
               "id": "733202ee342aef7e5e31-32a61da44cb8a29b1fe7",
               "file": "API Test/01_authCartTest.spec.js",
-              "line": 68,
+              "line": 58,
               "column": 3
             }
           ]
@@ -662,7 +662,7 @@
         {
           "title": "API-AC2 Product Selection & Invoice Generation",
           "file": "API Test/02_invoiceTest.spec.js",
-          "line": 36,
+          "line": 39,
           "column": 6,
           "specs": [
             {
@@ -683,12 +683,9 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5565,
+                      "duration": 5013,
                       "errors": [],
                       "stdout": [
-                        {
-                          "text": "[STEP] GET /products\n"
-                        },
                         {
                           "text": "[STEP] POST /users/register\n"
                         },
@@ -702,10 +699,10 @@
                           "text": "[STEP] POST /carts\n"
                         },
                         {
-                          "text": "[STEP] POST /carts/01kz9566e4evjxrvgt9jq2r0rz\n"
+                          "text": "[STEP] POST /carts/01kz9dp2z8p7cekek2s3cc2bmq\n"
                         },
                         {
-                          "text": "[STEP] GET /carts/01kz9566e4evjxrvgt9jq2r0rz\n"
+                          "text": "[STEP] GET /carts/01kz9dp2z8p7cekek2s3cc2bmq\n"
                         },
                         {
                           "text": "[STEP] POST /invoices\n"
@@ -713,7 +710,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:05.719Z",
+                      "startTime": "2026-08-05T16:56:35.684Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -723,7 +720,7 @@
               ],
               "id": "07e21e063a7285e8ce14-1ba3711f6cea6625553f",
               "file": "API Test/02_invoiceTest.spec.js",
-              "line": 37,
+              "line": 40,
               "column": 3
             },
             {
@@ -744,7 +741,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4152,
+                      "duration": 4810,
                       "errors": [],
                       "stdout": [
                         {
@@ -760,7 +757,7 @@
                           "text": "[STEP] POST /carts\n"
                         },
                         {
-                          "text": "[STEP] POST /carts/01kz956b1jvmnc613xn7gw5zjm\n"
+                          "text": "[STEP] POST /carts/01kz9dp89w2gydqafphxjnkp5d\n"
                         },
                         {
                           "text": "[STEP] POST /invoices\n"
@@ -768,7 +765,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:11.295Z",
+                      "startTime": "2026-08-05T16:56:40.708Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -799,7 +796,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4090,
+                      "duration": 4083,
                       "errors": [],
                       "stdout": [
                         {
@@ -815,7 +812,7 @@
                           "text": "[STEP] POST /carts\n"
                         },
                         {
-                          "text": "[STEP] POST /carts/01kz956f4mk175nae9f4v2c3rh\n"
+                          "text": "[STEP] POST /carts/01kz9dpcd0dc8mnk91z62bg9bz\n"
                         },
                         {
                           "text": "[STEP] POST /invoices\n"
@@ -823,7 +820,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:15.457Z",
+                      "startTime": "2026-08-05T16:56:45.528Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -854,7 +851,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4383,
+                      "duration": 4091,
                       "errors": [],
                       "stdout": [
                         {
@@ -870,7 +867,7 @@
                           "text": "[STEP] POST /carts\n"
                         },
                         {
-                          "text": "[STEP] POST /carts/01kz956ka0e51fd4x9tz583s00\n"
+                          "text": "[STEP] POST /carts/01kz9dpgd718xwwdf35rgxqdm8\n"
                         },
                         {
                           "text": "[STEP] POST /invoices\n"
@@ -878,7 +875,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-08-05T14:28:19.557Z",
+                      "startTime": "2026-08-05T16:56:49.620Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -898,8 +895,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-05T14:24:36.633Z",
-    "duration": 227343.421,
+    "startTime": "2026-08-05T16:52:13.233Z",
+    "duration": 280522.753,
     "expected": 16,
     "skipped": 0,
     "unexpected": 0,
