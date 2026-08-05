@@ -13,15 +13,15 @@ Prompts for Prism/Playwright structure, assertions, and failure analysis.
 
 ### Entry 2
 - **Prompt:** Implement CoD flow with Confirm twice and assert invoice; add regression for Confirm once.
-- **AI Response Summary:** `confirmTwice()` loops finish clicks until invoice/success; `confirmOnce()` for TC-UI-07 expects no invoice number yet.
-- **Debugging Outcome:** Matches assessment note; documents known product quirk as a regression case.
+- **AI Response Summary:** First draft waited loosely after second Confirm; TC-UI-07 only checked payment-page `invoice-number` absence.
+- **Debugging Outcome:** Later hardened — `confirmTwice()` fails closed on invoice-number **or** POST `/invoices`; TC-UI-07 also asserts My Invoices count is 0.
 
 ---
 
 ### Entry 3
 - **Prompt:** From Playwright JSON report, why did API-AC2 smoke fail with item count 0?
 - **AI Response Summary:** Add-to-cart likely succeeded but assertion looked at wrong property; OpenAPI/cart response uses `cart_items`.
-- **Debugging Outcome:** Assertion updated to prefer `cart_items`; setup now asserts add-product HTTP status.
+- **Debugging Outcome:** Assertion requires `cart_items` only (no fallbacks); setup asserts add-product HTTP status.
 
 ---
 
@@ -29,3 +29,10 @@ Prompts for Prism/Playwright structure, assertions, and failure analysis.
 - **Prompt:** Keep workers serial and raise timeout for live SUT flakiness without hiding real bugs.
 - **AI Response Summary:** `workers: 1`, 60s test timeout, 10s expect timeout, retries: 1.
 - **Debugging Outcome:** Improves stability on public demo app while still failing on real AC breaks.
+
+---
+
+### Entry 5
+- **Prompt:** Review suite for false-pass risks; harden waits/assertions without expanding Stretch scope.
+- **AI Response Summary:** Flagged soft `.catch` waits, weak `0.00` total check, loose invoice rows, edit-address matching `proceed-3`.
+- **Debugging Outcome:** Patched page objects + specs; full suite re-run **16 passed**. Recorded DEF-05 for the edit-address hang.

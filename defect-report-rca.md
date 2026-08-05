@@ -46,7 +46,7 @@ Defects and quirks found while building Core automation. Includes product quirks
 | Actual | Assertion saw `0` via `cart_products` / `items` |
 | Expected | ≥1 line item |
 | RCA | Response uses **`cart_items`**. AI-generated assertion guessed alternate names |
-| Fix | Prefer `cart_items`; assert add-product HTTP status in setup |
+| Fix | Assert `toHaveProperty('cart_items')` and length &gt; 0 (no `cart_products` / `items` fallbacks); assert add-product HTTP status in setup |
 | Status | Fixed in `02_invoiceTest.spec.js` |
 
 ---
@@ -61,6 +61,21 @@ Defects and quirks found while building Core automation. Includes product quirks
 | RCA | Page objects called `goto` but helper never implemented; starter assumed method existed |
 | Fix | Implement `goto` wrapping `page.goto` + logger |
 | Status | Fixed |
+
+---
+
+## DEF-05 — Edit-address locator matched disabled Proceed (automation false hang)
+
+| Field | Detail |
+|-------|--------|
+| Severity | High (UI-AC2 smoke timeout) |
+| Area | `CheckoutPage.editAddressButton` |
+| Steps | Broad locator `app-address` button / `getByRole('button').first()` during billing fill |
+| Actual | Resolved to disabled `[data-test="proceed-3"]`; click retried until test timeout |
+| Expected | Click only the address **edit** control (or skip if profile address already valid) |
+| RCA | Over-broad button locator inside `app-address` also matched Proceed |
+| Fix | Use `[data-test="edit-address"], app-address .float-end` only; never match `proceed-3` |
+| Status | Fixed; suite green after change |
 
 ---
 

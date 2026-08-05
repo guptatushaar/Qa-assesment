@@ -6,7 +6,7 @@
 **API SUT:** https://api.practicesoftwaretesting.com/api/documentation  
 **Repository folder:** `Tushaar_qa-ai-practical-assessment-main`  
 **Assessment Start Date:** 2026-08-05  
-**Submission Date:** 2026-08-05  
+**Submission Date:** 2026-08-06  
 **Public repository:** https://github.com/guptatushaar/Qa-assesment  
 **Candidate:** Tushaar Gupta  
 **Primary test identity:** first/last = Tushaar / Gupta; password = `Valid#12345` (meets API rules: upper, lower, number, symbol); email base = `tushaarguptatest@gmail.com` (automation uses `tushaarguptatest+<stamp>@gmail.com` so each run stays unique)
@@ -98,15 +98,15 @@ Focus is new-user registration, authenticated checkout, and invoice verification
 |------|------|------------|
 | Registration | Duplicate email / weak password / DOB age rules | Unique emails; valid password; fixed adult DOB |
 | Login | Invalid credentials still “succeed” in flaky waits | Negative tests use `expectSuccess: false` |
-| Cart | Race when adding products | Wait for cart quantity / toast |
-| Checkout | Missing `proceed-2`; address incomplete | Explicit step clicks; incomplete-address regression |
-| Invoice UI | Confirm once does not create invoice | Document + automate single vs double Confirm |
-| Invoice API | Wrong payload / empty cart | Fixture payload; assert `cart_items` before POST |
+| Cart | Race when adding products | Wait for toast **or** cart API response after add |
+| Checkout | Missing `proceed-2`; address incomplete | Explicit step clicks; incomplete-address regression + `expect.poll` on Proceed |
+| Invoice UI | Confirm once does not create invoice | Confirm×1 asserts payment page + empty My Invoices; Confirm×2 fails closed |
+| Invoice API | Wrong payload / empty cart | Fixture payload; assert `cart_items` property (no field-name fallbacks) |
 
 ## Coverage Matrix (Smoke / Regression)
 
 | Tier | Smoke | Regression |
 |------|-------|------------|
-| Manual | Register+login+profile; CoD invoice (confirm×2) | Duplicate email; wrong password; incomplete billing |
-| UI automation | TC-UI-01/02, TC-UI-05, TC-UI-06 | TC-UI-03, TC-UI-04, TC-UI-07, TC-UI-08 |
-| API automation | API-AC1-01/02/03, API-AC2-01/02/03 | API-AC1-04, API-AC1-05, API-AC2-04, API-AC2-05 |
+| Manual (8) | TC-M-01/02/03; TC-M-07/08 (API) | TC-M-04/05/06 |
+| UI automation (8) | TC-UI-01/02, TC-UI-05, TC-UI-06 | TC-UI-03, TC-UI-04, TC-UI-07, TC-UI-08, TC-UI-09 |
+| API automation (8) | API-AC1-01/02/03, API-AC2-01/02/03 | API-AC1-04/05/06, API-AC2-04/05/06 |

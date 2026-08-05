@@ -26,6 +26,7 @@
 | 2 | “Extract AC1/AC2 only; smoke vs regression; Core limit 5–8” | Matched guide + email focus on judgment |
 | 3 | “Fix register: country label is `Netherlands (the)`; use postcode lookup order” | Grounded in Playwright snapshot, not guessed DOM |
 | 4 | “Assert `cart_items` not `cart_products`; keep invoice `billing_country: TG`” | Validated against OpenAPI + assessment fixture |
+| 5 | “Fail-closed Confirm×2; TC-UI-07 empty My Invoices; no cart field fallbacks” | Closed false-pass gaps found in code review + live re-run |
 
 Pattern used: **Goal → Constraints → Inputs (files/URLs/errors) → Definition of done → Ask AI to list assumptions**.
 

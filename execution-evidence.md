@@ -1,8 +1,8 @@
 # Execution Evidence
 
-**Run date:** 2026-08-05  
-**Command:** `cd PrismStructure && npx playwright test`  
-**Result:** **13 passed**, 0 failed, 0 flaky (~3.8 min)
+**Run date:** 2026-08-06  
+**Command:** `cd PrismStructure && npm test` (`npx playwright test`)  
+**Result:** **16 passed**, 0 failed, 0 flaky (~3.1 min)
 
 ## Reports
 
@@ -22,8 +22,8 @@ npm run report
 
 | Project | Cases | Status |
 |---------|-------|--------|
-| UI (`ui-chromium`) | 7 | Passed |
-| API (`api`) | 6 | Passed |
+| UI (`ui-chromium`) | 8 | Passed |
+| API (`api`) | 8 | Passed |
 
-UI covers AC1 (register/login/profile + negatives) and AC2 (cart, CoD confirm×2 → My Invoices, confirm×1 quirk, incomplete billing).  
-API covers AC1 (register/login/token/cart + negatives) and AC2 (products/cart/invoice + contract negatives).
+UI covers AC1 (register/login/profile + negatives including empty password) and AC2 (cart totals, CoD confirm×2 → My Invoices, confirm×1 with empty My Invoices, incomplete billing).  
+API covers AC1 (register/login/token/cart + negatives) and AC2 (products/`cart_items`/invoice + contract negatives).
