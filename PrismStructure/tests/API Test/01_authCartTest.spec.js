@@ -6,19 +6,9 @@ const {
   INVALID_PASSWORD,
   weakPasswordUser,
 } = require('../../commonUtils/utils');
+const { retryOnServerError } = require('../../commonUtils/testHelpers');
 
 // API-AC1: register → login (token) → create cart (+ auth negatives).
-
-/** Retries transient 5xx from the public demo API without masking 4xx contract failures. */
-async function retryOnServerError(action, attempts = 3) {
-  let response;
-  for (let i = 0; i < attempts; i += 1) {
-    response = await action();
-    if (response.status() < 500) return response;
-    await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
-  }
-  return response;
-}
 
 test.describe('API-AC1 User Authentication & Cart Creation', () => {
   test('API-AC1-01/02/03: register, login, obtain token, create cart @smoke', async ({ request }) => {

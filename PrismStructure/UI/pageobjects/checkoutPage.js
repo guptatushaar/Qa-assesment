@@ -2,6 +2,8 @@
  * Checkout billing + payment page object.
  * Purpose: address step (proceed-3), Cash on Delivery, and Confirm×1 / Confirm×2 flows.
  */
+const { countryOptionLabel } = require('../../commonUtils/testHelpers');
+
 class CheckoutPage {
   constructor(page) {
     this.page = page;
@@ -20,25 +22,25 @@ class CheckoutPage {
     this.successMessage = page.getByText('Payment was successful', { exact: true });
   }
 
-  /** Maps short country names to the exact option label shown in the UI dropdown. */
-  countryLabel(country) {
-    if (!country) return 'Netherlands (the)';
-    if (/netherlands/i.test(country)) return 'Netherlands (the)';
-    return country;
-  }
-
   async isProceedEnabled() {
     if (!(await this.proceedToPayment.isVisible().catch(() => false))) return false;
     return this.proceedToPayment.isEnabled().catch(() => false);
   }
 
   async fillBillingAddress(address, { forceEdit = false } = {}) {
-    // Registered profile usually pre-fills address — wait for Proceed before editing.
+    // Registered profile usually pre-fills address — wait until Proceed is usable.
     if (!forceEdit) {
-      for (let i = 0; i < 12; i += 1) {
-        if (await this.isProceedEnabled()) return;
-        await this.page.waitForTimeout(400);
-      }
+      await this.page
+        .waitForFunction(
+          () => {
+            const btn = document.querySelector('[data-test="proceed-3"]');
+            return Boolean(btn && !btn.disabled);
+          },
+          null,
+          { timeout: 12000 },
+        )
+        .catch(() => {});
+      if (await this.isProceedEnabled()) return;
     }
 
     if (await this.editAddressButton.isVisible().catch(() => false)) {
@@ -51,7 +53,18 @@ class CheckoutPage {
     if (await this.houseNumber.count()) {
       await this.houseNumber.first().fill(address.house_number ?? '');
       await this.houseNumber.first().press('Tab');
-      await this.page.waitForTimeout(1200);
+      // Wait for autofill (street/city) or Proceed enabling — not a fixed sleep.
+      await this.page
+        .waitForFunction(
+          () => {
+            const street = document.querySelector('[data-test="street"]');
+            const btn = document.querySelector('[data-test="proceed-3"]');
+            return Boolean(street?.value) || Boolean(btn && !btn.disabled);
+          },
+          null,
+          { timeout: 8000 },
+        )
+        .catch(() => {});
     }
 
     if (forceEdit || !(await this.isProceedEnabled())) {
@@ -61,12 +74,11 @@ class CheckoutPage {
       if (address.country && (await this.country.isVisible().catch(() => false))) {
         const tag = await this.country.evaluate((el) => el.tagName.toLowerCase()).catch(() => '');
         if (tag === 'select') {
-          await this.country.selectOption({ label: this.countryLabel(address.country) });
+          await this.country.selectOption({ label: countryOptionLabel(address.country) });
         } else {
           await this.country.fill(address.country);
         }
       }
-      await this.page.waitForTimeout(500);
     }
   }
 
@@ -87,7 +99,7 @@ class CheckoutPage {
 
   async confirmOnce() {
     await this.confirmButton.click();
-    await this.page.waitForTimeout(800);
+    await this.successMessage.waitFor({ state: 'visible', timeout: 15000 });
   }
 
   /**
@@ -98,8 +110,11 @@ class CheckoutPage {
     await this.confirmButton.click();
     await this.successMessage.waitFor({ state: 'visible', timeout: 15000 });
     await this.confirmButton.click();
-    // Second confirm may swap the success banner for invoice details.
-    await this.page.waitForTimeout(1500);
+    // Do not race against successMessage — it is often still visible from Confirm #1
+    // and would return before the second Confirm finishes creating the invoice.
+    await this.invoiceNumber.waitFor({ state: 'visible', timeout: 15000 }).catch(async () => {
+      await this.page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
+    });
   }
 }
 

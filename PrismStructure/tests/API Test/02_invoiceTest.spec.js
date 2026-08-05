@@ -3,6 +3,7 @@ const { AuthApi } = require('../../API/pageobjects/authApi');
 const { CartApi } = require('../../API/pageobjects/cartApi');
 const { InvoiceApi } = require('../../API/pageobjects/invoiceApi');
 const { generateUniqueUser, validInvoicePayload } = require('../../commonUtils/utils');
+const { retryOnServerError } = require('../../commonUtils/testHelpers');
 
 // API-AC2: products → cart_items → invoice (guide fixture) + contract negatives.
 
@@ -12,22 +13,24 @@ async function setupAuthenticatedCartWithProduct(request) {
   const cartApi = new CartApi(request);
   const user = generateUniqueUser();
 
-  await authApi.register(user);
-  const loginRes = await authApi.login(user.email, user.password);
+  const registerRes = await retryOnServerError(() => authApi.register(user));
+  expect(registerRes.status(), 'registration should succeed during setup').toBeLessThan(300);
+
+  const loginRes = await retryOnServerError(() => authApi.login(user.email, user.password));
   expect(loginRes.status(), 'login should succeed during setup').toBe(200);
   const { access_token: token } = await loginRes.json();
 
-  const productsRes = await cartApi.getProducts();
+  const productsRes = await retryOnServerError(() => cartApi.getProducts());
   expect(productsRes.status(), 'products should load during setup').toBe(200);
   const products = await productsRes.json();
   const productList = products.data ?? products;
   const firstProductId = productList[0].id;
 
-  const cartRes = await cartApi.createCart(token);
+  const cartRes = await retryOnServerError(() => cartApi.createCart(token));
   expect(cartRes.status(), 'cart creation should succeed during setup').toBeLessThan(300);
   const cart = await cartRes.json();
 
-  const addRes = await cartApi.addProduct(cart.id, firstProductId, 1, token);
+  const addRes = await retryOnServerError(() => cartApi.addProduct(cart.id, firstProductId, 1, token));
   expect(addRes.status(), 'add product should succeed during setup').toBeLessThan(300);
 
   return { token, cartId: cart.id };
@@ -37,9 +40,6 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
   test('API-AC2-01/02/03: retrieve products, build cart, generate invoice @smoke', async ({ request }) => {
     const cartApi = new CartApi(request);
     const invoiceApi = new InvoiceApi(request);
-
-    const productsRes = await cartApi.getProducts();
-    expect(productsRes.status()).toBe(200);
 
     const { token, cartId } = await setupAuthenticatedCartWithProduct(request);
 

@@ -32,8 +32,10 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     await cartPage.goto();
     await expect(cartPage.lineItem).toHaveCount(2);
 
+    const totalBefore = (await cartPage.cartTotal.textContent())?.trim() ?? '';
     await cartPage.setQuantityForLine(0, 2);
-    // Total should leave the empty-cart default after quantity change.
+    // Quantity increase should change the cart total (not just leave a non-zero default).
+    await expect(cartPage.cartTotal).not.toHaveText(totalBefore);
     await expect(cartPage.cartTotal).not.toHaveText('0.00');
   });
 
@@ -43,8 +45,7 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
 
     const cartPage = po.getCartPage();
     await cartPage.goto();
-    await cartPage.proceedToCheckout.click();
-    await cartPage.proceedToAddress.click();
+    await cartPage.proceedToBillingAddress();
 
     const checkoutPage = po.getCheckoutPage();
     // Profile address usually enables Proceed; helper no-ops when already valid.
@@ -65,8 +66,7 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
 
     const cartPage = po.getCartPage();
     await cartPage.goto();
-    await cartPage.proceedToCheckout.click();
-    await cartPage.proceedToAddress.click();
+    await cartPage.proceedToBillingAddress();
 
     const checkoutPage = po.getCheckoutPage();
     await checkoutPage.fillBillingAddress(uiBillingAddress(user));
@@ -85,8 +85,7 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
 
     const cartPage = po.getCartPage();
     await cartPage.goto();
-    await cartPage.proceedToCheckout.click();
-    await cartPage.proceedToAddress.click();
+    await cartPage.proceedToBillingAddress();
 
     const checkoutPage = po.getCheckoutPage();
     await checkoutPage.fillBillingAddress(

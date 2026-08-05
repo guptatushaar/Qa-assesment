@@ -12,21 +12,10 @@ class LoginPage {
     this.password = page.locator('[data-test="password"]');
     this.submit = page.locator('[data-test="login-submit"]');
     this.error = page.locator('[data-test="login-error"], .alert-danger');
-    this.navSignIn = page.locator('[data-test="nav-sign-in"]');
-    this.registerLink = page.locator('[data-test="register-link"]');
   }
 
   async goto() {
     await this.web.goto('/auth/login');
-  }
-
-  async gotoFromHome() {
-    await this.web.goto('/');
-    await this.navSignIn.click();
-  }
-
-  async goToRegisterFromLogin() {
-    await this.registerLink.click();
   }
 
   async loginAs(email, password, { expectSuccess = true } = {}) {

@@ -1,8 +1,11 @@
+/**
+ * Cart page object.
+ * Purpose: line quantities, totals, and checkout step navigation (proceed-1 → proceed-2).
+ */
 class CartPage {
   constructor(page) {
     this.page = page;
     this.lineItem = page.locator('[data-test="product-quantity"]');
-    this.quantityInput = page.locator('[data-test="product-quantity"]');
     this.cartTotal = page.locator('[data-test="cart-total"]');
     this.proceedToCheckout = page.locator('[data-test="proceed-1"]');
     this.proceedToAddress = page.locator('[data-test="proceed-2"]');
@@ -10,7 +13,6 @@ class CartPage {
   }
 
   async goto() {
-    // Prefer nav cart; fall back to direct URL if badge/nav is slow after product adds.
     if (await this.navCart.isVisible().catch(() => false)) {
       await this.navCart.click({ timeout: 10000 }).catch(async () => {
         await this.page.goto('/checkout');
@@ -22,22 +24,30 @@ class CartPage {
     await this.proceedToCheckout.waitFor({ state: 'visible' });
   }
 
+  /** Cart → Sign in step → Billing Address step. */
+  async proceedToBillingAddress() {
+    await this.proceedToCheckout.click();
+    await this.proceedToAddress.click();
+  }
+
   async setQuantityForLine(index, qty) {
-    const input = this.quantityInput.nth(index);
+    const input = this.lineItem.nth(index);
+    const previousTotal = (await this.cartTotal.textContent())?.trim() ?? '';
     await input.fill('');
     await input.fill(String(qty));
     await input.blur();
-    await this.page.waitForTimeout(800);
-  }
-
-  async setQuantityForProduct(productName, qty) {
-    const input = this.page.getByRole('spinbutton', { name: new RegExp(`Quantity for ${productName}`, 'i') });
-    if (await input.count()) {
-      await input.fill(String(qty));
-      await input.press('Tab');
-      return;
-    }
-    await this.setQuantityForLine(0, qty);
+    // Wait until total changes (or stays non-empty) instead of a fixed sleep.
+    await this.page
+      .waitForFunction(
+        ({ prev }) => {
+          const el = document.querySelector('[data-test="cart-total"]');
+          const now = el?.textContent?.trim() ?? '';
+          return now.length > 0 && now !== prev;
+        },
+        { prev: previousTotal },
+        { timeout: 10000 },
+      )
+      .catch(() => {});
   }
 }
 

@@ -1,6 +1,6 @@
 {
-  "_comment": "Guide-aligned invoice fixture. Loaded by commonUtils/utils.validInvoicePayload(); cart_id replaced at runtime. TG+Florida+1234AA is accepted by the SUT.",
-  "billing_street": "Noida 130",
+  "_comment": "Guide example invoice body. cart_id is replaced at runtime by validInvoicePayload().",
+  "billing_street": "Zoey Shore",
   "billing_city": "Hesselbury",
   "billing_state": "Florida",
   "billing_country": "TG",

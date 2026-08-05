@@ -6,7 +6,8 @@
 **API SUT:** https://api.practicesoftwaretesting.com/api/documentation  
 **Repository folder:** `Tushaar_qa-ai-practical-assessment-main`  
 **Assessment Start Date:** 2026-08-05  
-**Submission Date:** _before 7 Aug EOD_  
+**Submission Date:** 2026-08-05  
+**Public repository:** https://github.com/guptatushaar/Qa-assesment  
 **Candidate:** Tushaar Gupta  
 **Primary test identity:** first/last = Tushaar / Gupta; password = `Valid#12345` (meets API rules: upper, lower, number, symbol); email base = `tushaarguptatest@gmail.com` (automation uses `tushaarguptatest+<stamp>@gmail.com` so each run stays unique)
 

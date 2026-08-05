@@ -1,4 +1,5 @@
 const { WebUtils } = require('../utilities/webUtils');
+const { countryOptionLabel } = require('../../commonUtils/testHelpers');
 
 /**
  * Registration form page object.
@@ -30,23 +31,13 @@ class RegisterPage {
     await this.firstName.waitFor({ state: 'visible' });
   }
 
-  /**
-   * UI country dropdown uses ISO labels like "Netherlands (the)".
-   * API payloads can keep a short country string.
-   */
-  countryLabel(country) {
-    if (!country) return 'Netherlands (the)';
-    if (/netherlands/i.test(country)) return 'Netherlands (the)';
-    return country;
-  }
-
   async registerWith(user, { expectSuccess = true } = {}) {
     await this.firstName.fill(user.first_name);
     await this.lastName.fill(user.last_name);
     await this.dob.fill(user.dob);
 
     // App: choose country + postal + house number → street/city/state auto-fill.
-    await this.country.selectOption({ label: this.countryLabel(user.address.country) });
+    await this.country.selectOption({ label: countryOptionLabel(user.address.country) });
     await this.postalCode.fill(user.address.postal_code);
     if (await this.houseNumber.count()) {
       await this.houseNumber.first().fill(user.address.house_number);
@@ -64,6 +55,7 @@ class RegisterPage {
         { timeout: 10000 },
       )
       .catch(async () => {
+        // Fallback only when postal lookup fails for this country/postal combo.
         if (user.address.street) await this.street.fill(user.address.street);
         if (user.address.city) await this.city.fill(user.address.city);
         if (user.address.state) await this.state.fill(user.address.state);

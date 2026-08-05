@@ -1,9 +1,12 @@
+/**
+ * Product catalog page object.
+ * Purpose: open products and add in-stock items to cart for checkout flows.
+ */
 class ProductsPage {
   constructor(page) {
     this.page = page;
     this.productCard = page.locator('[data-test="product-name"]');
     this.addToCartButton = page.locator('[data-test="add-to-cart"]');
-    this.cartQuantity = page.locator('[data-test="cart-quantity"]');
     this.toast = page.locator('.toast-body');
   }
 
@@ -12,9 +15,9 @@ class ProductsPage {
     await this.productCard.first().waitFor({ state: 'visible' });
   }
 
-  async openProductByIndex(index) {
-    await this.productCard.nth(index).click();
-    await this.addToCartButton.waitFor({ state: 'visible' });
+  async returnToCatalog() {
+    await this.page.goBack().catch(() => this.goto());
+    await this.productCard.first().waitFor({ state: 'visible', timeout: 10000 }).catch(() => this.goto());
   }
 
   async addCurrentProductToCart() {
@@ -25,22 +28,29 @@ class ProductsPage {
     await this.addToCartButton.scrollIntoViewIfNeeded();
     await this.addToCartButton.click();
     await this.toast.first().waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
-    await this.page.waitForTimeout(400);
   }
 
-  /** Adds two different in-stock products (skips disabled Add to cart). */
+  /**
+   * Adds two different in-stock products.
+   * Uses goBack between picks instead of reloading home for every catalog index.
+   */
   async addTwoInStockProducts() {
     await this.goto();
     const total = Math.min(await this.productCard.count(), 12);
     let added = 0;
 
     for (let i = 0; i < total && added < 2; i += 1) {
-      await this.goto();
       await this.productCard.nth(i).click();
       await this.addToCartButton.waitFor({ state: 'visible', timeout: 8000 });
-      if (!(await this.addToCartButton.isEnabled())) continue;
+
+      if (!(await this.addToCartButton.isEnabled())) {
+        await this.returnToCatalog();
+        continue;
+      }
+
       await this.addCurrentProductToCart();
       added += 1;
+      if (added < 2) await this.returnToCatalog();
     }
 
     if (added < 2) {
