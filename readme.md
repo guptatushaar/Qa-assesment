@@ -94,6 +94,7 @@ Reports (open in browser if `npm run report` fails):
 - UI: register/login/profile, cart quantity, CoD confirm×2 + My Invoices, negatives (duplicate email, bad password, empty password, confirm×1 → empty My Invoices, incomplete billing)
 - API: register/login/token/cart, products → `cart_items` → invoice with guide payload, contract negatives (missing field, bad `cart_id`, no token)
 - Limit: **5–8** cases per manual / UI / API tier including smoke + regression (current: **8 + 8 + 8**)
+- Traceability: `FunctionalTestCase.csv` ↔ automation IDs; see **Manual ↔ automation** section in `project-info.md` (some auth/API negatives are automation-only by design)
 - Latest evidence: **16 passed** — see `execution-evidence.md` + `PrismStructure/execution-reports/`
 
 ## Evaluation alignment (how to read this repo)

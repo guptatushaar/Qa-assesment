@@ -7,7 +7,7 @@ Prompts used to generate and refine UI + API scenarios (manual CSV + automation 
 ### Entry 1
 - **Prompt:** Generate ≤8 manual test cases covering UI AC1/AC2 and API AC1/AC2 with @smoke and @regression tags. Include double-confirm and single-confirm behaviors.
 - **AI Response Summary:** Eight CSV rows: register, profile verify, CoD invoice×2, duplicate email, bad password, single confirm, API auth+cart, API invoice.
-- **Validation Notes:** Trimmed to guide limit (5–8). Mapped each row to automation IDs in `FunctionalTestCase.csv`.
+- **Validation Notes:** Trimmed to guide limit (5–8). Mapped each row to automation IDs in `FunctionalTestCase.csv`. Later pass: TC-M-03 includes quantity update (AC2); TC-M-05 covers incomplete billing (TC-UI-08); wrong-password manual row dropped in favor of that mapping — still covered by TC-UI-04 automation-only.
 
 ---
 

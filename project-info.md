@@ -110,3 +110,24 @@ Focus is new-user registration, authenticated checkout, and invoice verification
 | Manual (8) | TC-M-01/02/03; TC-M-07/08 (API) | TC-M-04/05/06 |
 | UI automation (8) | TC-UI-01/02, TC-UI-05, TC-UI-06 | TC-UI-03, TC-UI-04, TC-UI-07, TC-UI-08, TC-UI-09 |
 | API automation (8) | API-AC1-01/02/03, API-AC2-01/02/03 | API-AC1-04/05/06, API-AC2-04/05/06 |
+
+### Manual ↔ automation traceability
+
+Manual CSV stays within the **5–8** guide cap and maps to ACs as follows:
+
+| Manual | Covers | Automation |
+|--------|--------|------------|
+| TC-M-01/02 | UI AC1 register/login/profile | TC-UI-01/02 |
+| TC-M-03 | UI AC2 cart qty + CoD confirm×2 + My Invoices | TC-UI-05 + TC-UI-06 |
+| TC-M-04 | Duplicate email | TC-UI-03 |
+| TC-M-05 | Incomplete billing / invalid transition | TC-UI-08 |
+| TC-M-06 | Confirm×1 quirk (no invoice yet) | TC-UI-07 |
+| TC-M-07/08 | API AC1 + AC2 happy path | API-AC1-01/02/03, API-AC2-01/02/03 |
+
+**Automation-only regressions** (kept out of CSV to stay ≤8 manual rows; still in PrismStructure with `@regression`):
+
+- TC-UI-04 wrong password; TC-UI-09 empty password  
+- API-AC1-04/05/06 (duplicate email, wrong password, weak password)  
+- API-AC2-04/05/06 (missing billing field, invalid `cart_id`, no bearer token)  
+
+These deepen invalid-transition coverage without duplicating every negative into the manual suite.
