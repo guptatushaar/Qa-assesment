@@ -4,6 +4,7 @@
 **Application Under Test:** PracticeSoftwareTesting Toolshop — Registration, Checkout & Invoice Flow  
 **UI SUT:** https://practicesoftwaretesting.com/  
 **API SUT:** https://api.practicesoftwaretesting.com/api/documentation  
+**Repository folder:** `Tushaar_qa-ai-practical-assessment-main`  
 **Assessment Start Date:** 2026-08-05  
 **Submission Date:** _before 7 Aug EOD_  
 **Candidate:** Tushaar Gupta  

@@ -28,7 +28,7 @@ Public submission for the **SE/SSE GenAI Learning & Skills Assessment**.
 ## Repository structure
 
 ```text
-qa-ai-practical-assessment/
+Tushaar_qa-ai-practical-assessment-main/
 ├── readme.md
 ├── tool-workflow.md
 ├── project-info.md

@@ -1,8 +1,8 @@
 {
-  "name": "qa-ai-practical-assessment",
+  "name": "tushaar-qa-ai-practical-assessment",
   "version": "1.0.0",
   "private": true,
-  "description": "QA AI assessment — run Playwright from PrismStructure",
+  "description": "Tushaar Gupta — QA AI assessment (PrismStructure Playwright UI + API)",
   "scripts": {
     "postinstall": "npm install --prefix PrismStructure",
     "test": "npm run test --prefix PrismStructure --",
