@@ -1,0 +1,908 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.6.0/bin/node",
+      "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/node_modules/.bin/playwright",
+      "test",
+      "--headed"
+    ],
+    "configFile": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/playwright.config.js",
+    "rootDir": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "ui-chromium",
+        "name": "ui-chromium",
+        "testDir": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/tests/UI Test",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "/Users/tushaar.gupta/Downloads/Tushaar_qa-ai-practical-assessment-main/PrismStructure/tests/API Test",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "execution-reports/html-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "execution-reports/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "UI Test/01_registerLoginTest.spec.js",
+      "file": "UI Test/01_registerLoginTest.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "UI-AC1 User Registration & Login",
+          "file": "UI Test/01_registerLoginTest.spec.js",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-01/02: register, log in, verify saved profile info @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13468,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:24:37.110Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f7e1344be584ed80b18c-d01cf3613b2ffb6907bd",
+              "file": "UI Test/01_registerLoginTest.spec.js",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-03: registering with an already-used email is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9597,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:24:51.483Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f7e1344be584ed80b18c-d1e00f7cf476781f7830",
+              "file": "UI Test/01_registerLoginTest.spec.js",
+              "line": 30,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-04: login with incorrect password is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8416,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:25:01.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f7e1344be584ed80b18c-7d71a17915f8d053170e",
+              "file": "UI Test/01_registerLoginTest.spec.js",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-09: login with empty password is blocked by validation @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2104,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:25:09.516Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f7e1344be584ed80b18c-5aa09bae5c0f5ec35176",
+              "file": "UI Test/01_registerLoginTest.spec.js",
+              "line": 60,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "UI Test/02_cartCheckoutTest.spec.js",
+      "file": "UI Test/02_cartCheckoutTest.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "UI-AC2 End-to-End Purchase Flow",
+          "file": "UI Test/02_cartCheckoutTest.spec.js",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-05: add multiple items and update quantity recalculates totals @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 36085,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:25:11.637Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f3865579c368307f68a-5935b5bc52b7cbfaaf45",
+              "file": "UI Test/02_cartCheckoutTest.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-06: Cash on Delivery checkout with double confirm generates an invoice @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 46448,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:25:47.731Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f3865579c368307f68a-4d7b2bdb9a18c3bce37a",
+              "file": "UI Test/02_cartCheckoutTest.spec.js",
+              "line": 40,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-07: a single Confirm click does not yet generate an invoice @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 43808,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:26:34.190Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f3865579c368307f68a-8dd510a07e1dedd6d801",
+              "file": "UI Test/02_cartCheckoutTest.spec.js",
+              "line": 62,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-08: checkout is blocked with an incomplete billing address @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "ui-chromium",
+                  "projectName": "ui-chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 39709,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] Goto /auth/register\n"
+                        },
+                        {
+                          "text": "[STEP] Goto /auth/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:27:18.009Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2f3865579c368307f68a-c515948ab079a7800a46",
+              "file": "UI Test/02_cartCheckoutTest.spec.js",
+              "line": 82,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "API Test/01_authCartTest.spec.js",
+      "file": "API Test/01_authCartTest.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API-AC1 User Authentication & Cart Creation",
+          "file": "API Test/01_authCartTest.spec.js",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "API-AC1-01/02/03: register, login, obtain token, create cart @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2583,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:27:58.744Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "733202ee342aef7e5e31-90829a7fe8f7534d3792",
+              "file": "API Test/01_authCartTest.spec.js",
+              "line": 24,
+              "column": 3
+            },
+            {
+              "title": "API-AC1-04: registering a duplicate email is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1942,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:01.354Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "733202ee342aef7e5e31-5b1a9ca37c262b942520",
+              "file": "API Test/01_authCartTest.spec.js",
+              "line": 48,
+              "column": 3
+            },
+            {
+              "title": "API-AC1-05: login with wrong password is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1681,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:03.305Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "733202ee342aef7e5e31-477cc8845d2b86567f85",
+              "file": "API Test/01_authCartTest.spec.js",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "API-AC1-06: register with weak password is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 703,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:04.996Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "733202ee342aef7e5e31-32a61da44cb8a29b1fe7",
+              "file": "API Test/01_authCartTest.spec.js",
+              "line": 68,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "API Test/02_invoiceTest.spec.js",
+      "file": "API Test/02_invoiceTest.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API-AC2 Product Selection & Invoice Generation",
+          "file": "API Test/02_invoiceTest.spec.js",
+          "line": 36,
+          "column": 6,
+          "specs": [
+            {
+              "title": "API-AC2-01/02/03: retrieve products, build cart, generate invoice @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5565,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] GET /products\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        },
+                        {
+                          "text": "[STEP] GET /products\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts/01kz9566e4evjxrvgt9jq2r0rz\n"
+                        },
+                        {
+                          "text": "[STEP] GET /carts/01kz9566e4evjxrvgt9jq2r0rz\n"
+                        },
+                        {
+                          "text": "[STEP] POST /invoices\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:05.719Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07e21e063a7285e8ce14-1ba3711f6cea6625553f",
+              "file": "API Test/02_invoiceTest.spec.js",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "API-AC2-04: invoice generation rejects missing required billing field @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4152,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        },
+                        {
+                          "text": "[STEP] GET /products\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts/01kz956b1jvmnc613xn7gw5zjm\n"
+                        },
+                        {
+                          "text": "[STEP] POST /invoices\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:11.295Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07e21e063a7285e8ce14-a06962dc61cf2ba14e46",
+              "file": "API Test/02_invoiceTest.spec.js",
+              "line": 62,
+              "column": 3
+            },
+            {
+              "title": "API-AC2-05: invoice generation rejects an invalid cart_id @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4090,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        },
+                        {
+                          "text": "[STEP] GET /products\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts/01kz956f4mk175nae9f4v2c3rh\n"
+                        },
+                        {
+                          "text": "[STEP] POST /invoices\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:15.457Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07e21e063a7285e8ce14-7d27420e110ef1e46102",
+              "file": "API Test/02_invoiceTest.spec.js",
+              "line": 73,
+              "column": 3
+            },
+            {
+              "title": "API-AC2-06: invoice generation without bearer token is rejected @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4383,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[STEP] POST /users/register\n"
+                        },
+                        {
+                          "text": "[STEP] POST /users/login\n"
+                        },
+                        {
+                          "text": "[STEP] GET /products\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts\n"
+                        },
+                        {
+                          "text": "[STEP] POST /carts/01kz956ka0e51fd4x9tz583s00\n"
+                        },
+                        {
+                          "text": "[STEP] POST /invoices\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-05T14:28:19.557Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07e21e063a7285e8ce14-ea3bf4ad21dc0fdbc013",
+              "file": "API Test/02_invoiceTest.spec.js",
+              "line": 82,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-05T14:24:36.633Z",
+    "duration": 227343.421,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
