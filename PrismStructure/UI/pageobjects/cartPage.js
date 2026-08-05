@@ -36,18 +36,16 @@ class CartPage {
     await input.fill('');
     await input.fill(String(qty));
     await input.blur();
-    // Wait until total changes (or stays non-empty) instead of a fixed sleep.
-    await this.page
-      .waitForFunction(
-        ({ prev }) => {
-          const el = document.querySelector('[data-test="cart-total"]');
-          const now = el?.textContent?.trim() ?? '';
-          return now.length > 0 && now !== prev;
-        },
-        { prev: previousTotal },
-        { timeout: 10000 },
-      )
-      .catch(() => {});
+    // Fail if quantity change does not update the cart total.
+    await this.page.waitForFunction(
+      ({ prev }) => {
+        const el = document.querySelector('[data-test="cart-total"]');
+        const now = el?.textContent?.trim() ?? '';
+        return now.length > 0 && now !== prev;
+      },
+      { prev: previousTotal },
+      { timeout: 10000 },
+    );
   }
 }
 

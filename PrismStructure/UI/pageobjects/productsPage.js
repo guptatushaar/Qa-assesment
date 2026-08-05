@@ -26,8 +26,15 @@ class ProductsPage {
       throw new Error('Add to cart is disabled (product likely out of stock)');
     }
     await this.addToCartButton.scrollIntoViewIfNeeded();
+    const cartUpdated = Promise.race([
+      this.toast.first().waitFor({ state: 'visible', timeout: 10000 }),
+      this.page.waitForResponse(
+        (res) => /\/carts?\b/i.test(res.url()) && res.request().method() !== 'GET' && res.status() < 400,
+        { timeout: 10000 },
+      ),
+    ]);
     await this.addToCartButton.click();
-    await this.toast.first().waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+    await cartUpdated;
   }
 
   /**

@@ -24,13 +24,17 @@ async function setupAuthenticatedCartWithProduct(request) {
   expect(productsRes.status(), 'products should load during setup').toBe(200);
   const products = await productsRes.json();
   const productList = products.data ?? products;
-  const firstProductId = productList[0].id;
+  const inStock =
+    productList.find(
+      (p) => p.in_stock !== false && (p.stock == null || Number(p.stock) > 0),
+    ) ?? productList[0];
+  expect(inStock?.id, 'setup needs at least one product id').toBeTruthy();
 
   const cartRes = await retryOnServerError(() => cartApi.createCart(token));
   expect(cartRes.status(), 'cart creation should succeed during setup').toBeLessThan(300);
   const cart = await cartRes.json();
 
-  const addRes = await retryOnServerError(() => cartApi.addProduct(cart.id, firstProductId, 1, token));
+  const addRes = await retryOnServerError(() => cartApi.addProduct(cart.id, inStock.id, 1, token));
   expect(addRes.status(), 'add product should succeed during setup').toBeLessThan(300);
 
   return { token, cartId: cart.id };
@@ -46,12 +50,9 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
     const cartCheck = await cartApi.getCart(cartId, token);
     expect(cartCheck.status()).toBe(200);
     const cartBody = await cartCheck.json();
-    const itemCount =
-      cartBody.cart_items?.length ??
-      cartBody.cart_products?.length ??
-      cartBody.items?.length ??
-      0;
-    expect(itemCount).toBeGreaterThan(0);
+    // Contract field is cart_items (not cart_products / items fallbacks).
+    expect(cartBody).toHaveProperty('cart_items');
+    expect(cartBody.cart_items.length).toBeGreaterThan(0);
 
     const invoiceRes = await invoiceApi.generateInvoice(validInvoicePayload(cartId), token);
     expect(invoiceRes.status(), 'invoice generation should succeed with a valid payload').toBeLessThan(300);

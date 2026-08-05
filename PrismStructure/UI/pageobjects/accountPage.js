@@ -9,7 +9,10 @@ class AccountPage {
     this.lastName = page.locator('[data-test="last-name"]');
     this.email = page.locator('[data-test="email"]');
     this.invoicesLink = page.locator('[data-test="nav-my-invoices"]');
-    this.invoiceRows = page.locator('table tbody tr, [data-test="invoice-number"]');
+    // Real invoice rows only — avoid empty-state / layout table rows.
+    this.invoiceRows = page.locator('table tbody tr').filter({
+      has: page.locator('a[href*="invoice"], [data-test="invoice-number"]'),
+    });
   }
 
   async goto() {

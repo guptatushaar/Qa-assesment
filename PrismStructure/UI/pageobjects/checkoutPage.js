@@ -13,7 +13,8 @@ class CheckoutPage {
     this.state = page.locator('[data-test="state"]');
     this.country = page.locator('[data-test="country"]');
     this.postalCode = page.locator('[data-test="postal_code"]');
-    this.editAddressButton = page.locator('app-address .float-end, [data-test="edit-address"]');
+    // Edit control only — never match proceed-3 (also a button inside app-address).
+    this.editAddressButton = page.locator('[data-test="edit-address"], app-address .float-end').first();
     this.proceedToPayment = page.locator('[data-test="proceed-3"]');
     this.paymentMethodSelect = page.locator('[data-test="payment-method"]');
     this.confirmButton = page.locator('[data-test="finish"]');
@@ -30,16 +31,18 @@ class CheckoutPage {
   async fillBillingAddress(address, { forceEdit = false } = {}) {
     // Registered profile usually pre-fills address — wait until Proceed is usable.
     if (!forceEdit) {
-      await this.page
-        .waitForFunction(
+      try {
+        await this.page.waitForFunction(
           () => {
             const btn = document.querySelector('[data-test="proceed-3"]');
             return Boolean(btn && !btn.disabled);
           },
           null,
           { timeout: 12000 },
-        )
-        .catch(() => {});
+        );
+      } catch {
+        // Profile may still need manual edit — continue below.
+      }
       if (await this.isProceedEnabled()) return;
     }
 
@@ -54,8 +57,8 @@ class CheckoutPage {
       await this.houseNumber.first().fill(address.house_number ?? '');
       await this.houseNumber.first().press('Tab');
       // Wait for autofill (street/city) or Proceed enabling — not a fixed sleep.
-      await this.page
-        .waitForFunction(
+      try {
+        await this.page.waitForFunction(
           () => {
             const street = document.querySelector('[data-test="street"]');
             const btn = document.querySelector('[data-test="proceed-3"]');
@@ -63,8 +66,10 @@ class CheckoutPage {
           },
           null,
           { timeout: 8000 },
-        )
-        .catch(() => {});
+        );
+      } catch {
+        // Autofill may be unavailable — fill remaining fields below.
+      }
     }
 
     if (forceEdit || !(await this.isProceedEnabled())) {
@@ -105,16 +110,32 @@ class CheckoutPage {
   /**
    * Known SUT behavior: first Confirm → "Payment was successful";
    * second Confirm → invoice is created.
+   * Fails closed unless invoice-number appears or POST /invoices succeeds.
    */
   async confirmTwice() {
     await this.confirmButton.click();
     await this.successMessage.waitFor({ state: 'visible', timeout: 15000 });
+
+    // Listen before the second click — do not race against successMessage from Confirm #1.
+    const invoiceCreated = Promise.race([
+      this.invoiceNumber.waitFor({ state: 'visible', timeout: 20000 }),
+      this.page.waitForResponse(
+        (res) =>
+          /\/invoices\b/i.test(res.url()) &&
+          res.request().method() === 'POST' &&
+          res.status() < 400,
+        { timeout: 20000 },
+      ),
+    ]);
+
     await this.confirmButton.click();
-    // Do not race against successMessage — it is often still visible from Confirm #1
-    // and would return before the second Confirm finishes creating the invoice.
-    await this.invoiceNumber.waitFor({ state: 'visible', timeout: 15000 }).catch(async () => {
-      await this.page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-    });
+    try {
+      await invoiceCreated;
+    } catch {
+      throw new Error(
+        'Confirm×2 did not create an invoice (invoice-number still hidden and no successful POST /invoices)',
+      );
+    }
   }
 }
 

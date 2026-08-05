@@ -34,9 +34,11 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
 
     const totalBefore = (await cartPage.cartTotal.textContent())?.trim() ?? '';
     await cartPage.setQuantityForLine(0, 2);
-    // Quantity increase should change the cart total (not just leave a non-zero default).
+    // Quantity increase should change the cart total (handles $ / € prefixed amounts).
     await expect(cartPage.cartTotal).not.toHaveText(totalBefore);
-    await expect(cartPage.cartTotal).not.toHaveText('0.00');
+    const totalAfter = (await cartPage.cartTotal.textContent())?.trim() ?? '';
+    expect(totalAfter.length).toBeGreaterThan(0);
+    expect(totalAfter).not.toMatch(/^[$€]?\s*0([.,]0+)?$/);
   });
 
   test('TC-UI-06: Cash on Delivery checkout with double confirm generates an invoice @smoke', async ({ page }) => {
@@ -74,9 +76,14 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     await checkoutPage.selectCashOnDelivery();
     await checkoutPage.confirmOnce();
 
-    // Documents known app behavior: one Confirm is not enough for an invoice number.
+    // Documents known app behavior: one Confirm is not enough for an invoice.
     await expect(checkoutPage.successMessage).toBeVisible();
     await expect(checkoutPage.invoiceNumber).not.toBeVisible();
+
+    // Stronger proof: My Invoices stays empty after Confirm×1 (new user has no prior invoices).
+    const accountPage = po.getAccountPage();
+    await accountPage.gotoMyInvoices();
+    await expect(accountPage.invoiceRows).toHaveCount(0);
   });
 
   test('TC-UI-08: checkout is blocked with an incomplete billing address @regression', async ({ page }) => {
@@ -94,7 +101,9 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     );
 
     // Incomplete address should keep Proceed disabled / payment step unreachable.
-    expect(await checkoutPage.isProceedEnabled()).toBeFalsy();
+    await expect
+      .poll(async () => checkoutPage.isProceedEnabled(), { timeout: 10000 })
+      .toBeFalsy();
     await expect(checkoutPage.paymentMethodSelect).not.toBeVisible();
   });
 });
