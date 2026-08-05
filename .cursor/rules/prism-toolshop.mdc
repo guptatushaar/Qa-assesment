@@ -1,0 +1,14 @@
+---
+description: Prism Playwright conventions for Toolshop QA assessment
+alwaysApply: true
+---
+
+# PrismStructure conventions
+
+- Keep automation under `PrismStructure/` only.
+- Prefer existing page objects / API helpers; do not invent new frameworks.
+- Tag tests with `@smoke` or `@regression` in the title; stay within 5–8 cases per UI and API tier.
+- Cash on Delivery invoice requires **Confirm twice**; single Confirm is a regression assertion.
+- Invoice API payload must match the guide fixture (`billing_country: "TG"`).
+- Do not commit secrets; use synthetic faker users only.
+- Update `ai-prompts/` when debugging or redesigning — iterative evidence matters.
