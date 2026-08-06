@@ -6,7 +6,7 @@ const {
   INVALID_PASSWORD,
   weakPasswordUser,
 } = require('../../commonUtils/utils');
-const { retryOnServerError } = require('../../commonUtils/testHelpers');
+const { retryOnServerError, expectClientError } = require('../../commonUtils/testHelpers');
 
 // API-AC1: register → login (token) → create cart → logout (token invalidation) (+ auth negatives).
 
@@ -42,7 +42,8 @@ test.describe('API-AC1 User Authentication & Cart Creation', () => {
     expect(logoutRes.status(), 'logout should succeed').toBe(200);
 
     const afterLogout = await authApi.me(token);
-    expect(afterLogout.status(), 'token must be invalid after logout').toBeGreaterThanOrEqual(401);
+    expectClientError(expect, afterLogout.status(), 'token must be invalid after logout');
+    expect(afterLogout.status(), 'logout should yield unauthorized (401/403)').toBeGreaterThanOrEqual(401);
   });
 
   test('API-AC1-04: registering a duplicate email is rejected @regression', async ({ request }) => {
@@ -53,21 +54,24 @@ test.describe('API-AC1 User Authentication & Cart Creation', () => {
     expect(first.status()).toBeLessThan(300);
 
     const duplicate = await authApi.register(user);
-    expect(duplicate.status(), 'duplicate email must not be accepted').toBeGreaterThanOrEqual(400);
+    expectClientError(expect, duplicate.status(), 'duplicate email must not be accepted');
   });
 
   test('API-AC1-05: login with wrong password is rejected @regression', async ({ request }) => {
     const authApi = new AuthApi(request);
     const user = generateUniqueUser();
-    await retryOnServerError(() => authApi.register(user));
+    const registerRes = await retryOnServerError(() => authApi.register(user));
+    expect(registerRes.status(), 'setup registration must succeed').toBeLessThan(300);
 
     const badLogin = await authApi.login(user.email, INVALID_PASSWORD);
-    expect(badLogin.status(), 'wrong password must not return a token').toBeGreaterThanOrEqual(400);
+    expectClientError(expect, badLogin.status(), 'wrong password must not return a token');
+    const body = await badLogin.json().catch(() => ({}));
+    expect(body).not.toHaveProperty('access_token');
   });
 
   test('API-AC1-06: register with weak password is rejected @regression', async ({ request }) => {
     const authApi = new AuthApi(request);
     const res = await authApi.register(weakPasswordUser());
-    expect(res.status(), 'weak password must be rejected').toBeGreaterThanOrEqual(400);
+    expectClientError(expect, res.status(), 'weak password must be rejected');
   });
 });

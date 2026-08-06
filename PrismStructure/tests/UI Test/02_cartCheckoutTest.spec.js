@@ -89,8 +89,15 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     await captureStep(page, testInfo, '07-after-confirm-once');
 
     // Stronger proof: My Invoices stays empty after Confirm×1 (new user has no prior invoices).
+    // Wait a window for late hydration — immediate toHaveCount(0) can false-pass while the table loads.
     const accountPage = po.getAccountPage();
     await accountPage.gotoMyInvoices();
+    const invoiceAppeared = await accountPage.invoiceRows
+      .first()
+      .waitFor({ state: 'visible', timeout: 3000 })
+      .then(() => true)
+      .catch(() => false);
+    expect(invoiceAppeared, 'Invoice row must not appear after Confirm×1').toBe(false);
     await expect(accountPage.invoiceRows).toHaveCount(0);
     await captureStep(page, testInfo, '07-my-invoices-empty');
   });

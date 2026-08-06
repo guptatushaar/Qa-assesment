@@ -28,7 +28,7 @@ class RegisterPage {
 
   async goto() {
     await this.web.goto('/auth/register');
-    await this.firstName.waitFor({ state: 'visible' });
+    await this.firstName.waitFor({ state: 'visible', timeout: 15000 });
   }
 
   async registerWith(user, { expectSuccess = true } = {}) {

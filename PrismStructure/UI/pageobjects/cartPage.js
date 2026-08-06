@@ -27,6 +27,7 @@ class CartPage {
   /** Cart → Sign in step → Billing Address step. */
   async proceedToBillingAddress() {
     await this.proceedToCheckout.click();
+    await this.proceedToAddress.waitFor({ state: 'visible', timeout: 15000 });
     await this.proceedToAddress.click();
   }
 

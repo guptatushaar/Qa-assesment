@@ -3,7 +3,7 @@ const { AuthApi } = require('../../API/pageobjects/authApi');
 const { CartApi } = require('../../API/pageobjects/cartApi');
 const { InvoiceApi } = require('../../API/pageobjects/invoiceApi');
 const { generateUniqueUser, validInvoicePayload } = require('../../commonUtils/utils');
-const { retryOnServerError, expectInvoiceDetail } = require('../../commonUtils/testHelpers');
+const { retryOnServerError, expectInvoiceDetail, expectClientError } = require('../../commonUtils/testHelpers');
 
 // API-AC2: products → cart_items → invoice (guide fixture) + GET detail + contract negatives.
 
@@ -76,7 +76,7 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
     delete payload.billing_country;
 
     const res = await invoiceApi.generateInvoice(payload, token);
-    expect(res.status(), 'missing required billing field must be rejected').toBeGreaterThanOrEqual(400);
+    expectClientError(expect, res.status(), 'missing required billing field must be rejected');
   });
 
   test('API-AC2-05: invoice generation rejects an invalid cart_id @regression', async ({ request }) => {
@@ -85,7 +85,7 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
 
     const payload = validInvoicePayload('non-existent-cart-id');
     const res = await invoiceApi.generateInvoice(payload, token);
-    expect(res.status(), 'invalid cart_id must be rejected').toBeGreaterThanOrEqual(400);
+    expectClientError(expect, res.status(), 'invalid cart_id must be rejected');
   });
 
   test('API-AC2-06: invoice generation without bearer token is rejected @regression', async ({ request }) => {
@@ -93,6 +93,7 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
     const { cartId } = await setupAuthenticatedCartWithProduct(request);
 
     const res = await invoiceApi.generateInvoice(validInvoicePayload(cartId));
-    expect(res.status(), 'missing auth token must be rejected').toBeGreaterThanOrEqual(401);
+    const status = res.status();
+    expect([401, 403], 'missing auth token must be unauthorized (not 5xx)').toContain(status);
   });
 });

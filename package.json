@@ -10,7 +10,7 @@
     "test:regression": "npm run test:regression --prefix PrismStructure --",
     "test:ui": "npm run test:ui --prefix PrismStructure --",
     "test:api": "npm run test:api --prefix PrismStructure --",
-    "test:headed": "npm run test --prefix PrismStructure -- --headed",
+    "test:headed": "npm run test:headed --prefix PrismStructure",
     "report": "npm --prefix PrismStructure run report"
   }
 }

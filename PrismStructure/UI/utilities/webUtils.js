@@ -8,7 +8,7 @@ class WebUtils {
 
   async goto(path) {
     logger.step(`Goto ${path}`);
-    await this.page.goto(path);
+    await this.page.goto(path, { waitUntil: 'domcontentloaded' });
   }
 }
 

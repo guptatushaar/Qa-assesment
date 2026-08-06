@@ -61,8 +61,7 @@ From the **repo root** (recommended):
 npm install              # also installs PrismStructure deps
 cd PrismStructure && npx playwright install chromium && cd ..
 npm test                 # full UI + API
-npm run test -- --headed # headed browser
-npm run test:headed      # same as above
+npm run test:headed      # headed browser (preferred)
 npm run test:smoke
 npm run test:regression
 npm run test:ui

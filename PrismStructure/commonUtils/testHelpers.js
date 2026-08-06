@@ -39,8 +39,17 @@ function expectInvoiceDetail(expect, detail, billing) {
   expect(detail.billing_postal_code).toBe(billing.billing_postal_code);
   expect(detail.invoicelines, 'invoicelines should be present').toBeTruthy();
   expect(detail.invoicelines.length, 'invoice should have at least one line item').toBeGreaterThan(0);
+  const line = detail.invoicelines[0];
+  expect(line.product_id || line.product?.id, 'line item should reference a product').toBeTruthy();
+  expect(Number(line.quantity), 'line item quantity should be > 0').toBeGreaterThan(0);
   expect(Number(detail.subtotal), 'subtotal should be > 0').toBeGreaterThan(0);
   expect(Number(detail.total), 'total should be > 0').toBeGreaterThan(0);
+}
+
+/** Contract negatives must be 4xx — 5xx is infra failure, not a passing rejection. */
+function expectClientError(expect, status, message) {
+  expect(status, message).toBeGreaterThanOrEqual(400);
+  expect(status, `${message} (must not pass on 5xx)`).toBeLessThan(500);
 }
 
 module.exports = {
@@ -48,4 +57,5 @@ module.exports = {
   countryOptionLabel,
   INV_NUMBER_PATTERN,
   expectInvoiceDetail,
+  expectClientError,
 };

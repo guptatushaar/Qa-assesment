@@ -46,7 +46,7 @@ Prompts for Prism/Playwright structure, assertions, and failure analysis.
 
 ---
 
-### Entry 7 — Chain-of-thought (logout) + dead-end
-- **Prompt:** Think step-by-step: how does Toolshop invalidate a session on API and UI? Probe verbs on `/users/logout`, `/logout`, `/auth/logout`. Prove token death with the strongest protected call. Keep Core case count.
-- **AI Response Summary:** Suggested `POST /users/logout` then re-call `POST /carts`.
-- **Debugging Outcome / Validation (dead-end recorded):** POST `/users/logout` → **405**; `/logout` and `/auth/logout` → **404**. Correct path: **`GET /users/logout`** → 200. Cart `POST` still returned 201 without auth (weak proof). Pivot: assert `GET /users/me` 200 before logout and ≥401 after. UI: `nav-menu` → `nav-sign-out`. Deepened TC-UI-01/02 and API-AC1 smoke instead of adding cases.
+### Entry 8 — Code review false-pass hardening
+- **Prompt:** Review PrismStructure for false-pass risks and flakes; fix minimal Core issues; re-run suite; sync docs.
+- **AI Response Summary:** Flagged stale toast on 2nd add-to-cart, Confirm×1 `toHaveCount(0)` race, API-AC1-05 missing register assert, ≥400 accepting 5xx, unbounded register waitFor, proceed-2 no wait, headed npm arg drift.
+- **Debugging Outcome:** Wait cart **response** (not toast); Confirm×1 empty-window race; register status + no `access_token` on bad login; `expectClientError` 4xx band; register `waitFor` 15s; wait `proceed-2`; root `test:headed` → PrismStructure script; docs aligned.

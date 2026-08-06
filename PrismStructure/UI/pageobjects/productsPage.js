@@ -26,15 +26,13 @@ class ProductsPage {
       throw new Error('Add to cart is disabled (product likely out of stock)');
     }
     await this.addToCartButton.scrollIntoViewIfNeeded();
-    const cartUpdated = Promise.race([
-      this.toast.first().waitFor({ state: 'visible', timeout: 10000 }),
-      this.page.waitForResponse(
-        (res) => /\/carts?\b/i.test(res.url()) && res.request().method() !== 'GET' && res.status() < 400,
-        { timeout: 10000 },
-      ),
-    ]);
+    // Prefer cart network confirmation — a leftover toast from a prior add must not short-circuit.
+    const cartResponse = this.page.waitForResponse(
+      (res) => /\/carts?\b/i.test(res.url()) && res.request().method() !== 'GET' && res.status() < 400,
+      { timeout: 10000 },
+    );
     await this.addToCartButton.click();
-    await cartUpdated;
+    await cartResponse;
   }
 
   /**
@@ -48,7 +46,12 @@ class ProductsPage {
 
     for (let i = 0; i < total && added < 2; i += 1) {
       await this.productCard.nth(i).click();
-      await this.addToCartButton.waitFor({ state: 'visible', timeout: 8000 });
+      try {
+        await this.addToCartButton.waitFor({ state: 'visible', timeout: 8000 });
+      } catch {
+        await this.returnToCatalog();
+        continue;
+      }
 
       if (!(await this.addToCartButton.isEnabled())) {
         await this.returnToCatalog();
