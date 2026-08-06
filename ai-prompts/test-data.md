@@ -26,6 +26,13 @@ Prompts used to design/generate UI + API data, including AI-assisted faker usage
 ---
 
 ### Entry 4
-- **Prompt:** Change country to Canada, postal 1432AA, billing_state UttarP, billing_postal 2134AB — keep identity Tushaar/Gupta.
+- **Prompt:** Change country to Canada, postal 1432AA, billing_state UttarP, billing_postal 2134AB — keep identity Ritika/Bansal.
 - **AI Response Summary:** Applied fields; suite then failed invoice UI + API (422 / empty My Invoices).
 - **Validation Notes (rejected AI “just keep Canada”):** Probed API — `UttarP`/`2134AB` invalid with `TG`; Canada + Dutch postal blocked Proceed. Kept NL + 1432AA for UI; invoice fixture restored to guide example (`Zoey Shore` / Hesselbury / Florida / TG / 1234AA). Centralized data in `utils.js` + JSON so UI/API no longer drift.
+
+---
+
+### Entry 5 — Test identity + email sync
+- **Prompt:** Set synthetic registrant to first=`Ritika`, last=`Bansal`, email local=`ritikabansaltest`; update CSV, README, project-info, and prompt history so docs match `utils.js`.
+- **AI Response Summary:** Updated `generateUniqueUser()` + docs; runtime addresses remain `ritikabansaltest+<stamp>@gmail.com`.
+- **Validation Notes:** Confirmed no remaining `tushaarguptatest` references in test data or identity docs; folder/GitHub URL left as physical repo paths.

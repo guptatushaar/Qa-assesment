@@ -8,8 +8,8 @@
 **Assessment Start Date:** 2026-08-05  
 **Submission Date:** 2026-08-06  
 **Public repository:** https://github.com/guptatushaar/Qa-assesment  
-**Candidate:** Tushaar Gupta  
-**Primary test identity:** first/last = Tushaar / Gupta; password = `Valid#12345` (meets API rules: upper, lower, number, symbol); email base = `tushaarguptatest@gmail.com` (automation uses `tushaarguptatest+<stamp>@gmail.com` so each run stays unique)
+**Candidate:** Ritika Bansal  
+**Primary test identity:** first/last = Ritika / Bansal; password = `Valid#12345` (meets API rules: upper, lower, number, symbol); email base = `ritikabansaltest@gmail.com` (automation uses `ritikabansaltest+<stamp>@gmail.com` so each run stays unique)
 
 ---
 
@@ -68,7 +68,7 @@ Focus is new-user registration, authenticated checkout, invoice verification (UI
 
 ### 7. How AI is used for test data generation
 
-- Tushaar Gupta identity; fixed strong password `Valid#12345`; unique emails via `tushaarguptatest+<stamp>@gmail.com`.
+- Ritika Bansal identity; fixed strong password `Valid#12345`; unique emails via `ritikabansaltest+<stamp>@gmail.com`.
 - Invoice payload cloned from assessment example; `cart_id` injected at runtime.
 
 ### 8. How AI is used for debugging
@@ -111,7 +111,7 @@ Focus is new-user registration, authenticated checkout, invoice verification (UI
 | Live demo (default) | `https://practicesoftwaretesting.com` | `https://api.practicesoftwaretesting.com` | Public SUT used for assessment evidence |
 | Override | `UI_BASE_URL` | `API_BASE_URL` | Set in shell / CI when pointing at another deploy |
 
-**Data cleanup:** each run uses unique `tushaarguptatest+<stamp>@gmail.com` users (no shared fixtures to delete). Carts/invoices are owned by that ephemeral user; no admin purge required on the public demo. Synthetic identity only — no secrets.
+**Data cleanup:** each run uses unique `ritikabansaltest+<stamp>@gmail.com` users (no shared fixtures to delete). Carts/invoices are owned by that ephemeral user; no admin purge required on the public demo. Synthetic identity only — no secrets.
 
 ## Coverage Matrix (Smoke / Regression)
 

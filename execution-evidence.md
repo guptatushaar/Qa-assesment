@@ -2,7 +2,8 @@
 
 **Run date:** 2026-08-06  
 **Command:** `cd PrismStructure && npm test` (`npx playwright test` + evidence collector)  
-**Result:** **16 passed** (see `PrismStructure/execution-reports/results.json`)
+**Result:** **16 passed** (see `PrismStructure/execution-reports/results.json`)  
+**Test identity:** Ritika Bansal · `ritikabansaltest+<stamp>@gmail.com` · `Valid#12345`
 
 ## Reports & screenshots
 
