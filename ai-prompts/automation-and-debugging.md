@@ -36,3 +36,17 @@ Prompts for Prism/Playwright structure, assertions, and failure analysis.
 - **Prompt:** Review suite for false-pass risks; harden waits/assertions without expanding Stretch scope.
 - **AI Response Summary:** Flagged soft `.catch` waits, weak `0.00` total check, loose invoice rows, edit-address matching `proceed-3`.
 - **Debugging Outcome:** Patched page objects + specs; full suite re-run **16 passed**. Recorded DEF-05 for the edit-address hang.
+
+---
+
+### Entry 6 — Few-shot (invoice detail)
+- **Prompt:** Given this live `GET /invoices/{id}` JSON sample (`invoice_number: INV-2026000028`, `invoicelines[]`, `billing_*`, `subtotal`/`total`), deepen API-AC2 smoke with assertions. Stay within 8 cases — do not add a new test file.
+- **AI Response Summary:** First draft guessed `line_items` and `INV-\d+` only.
+- **Debugging Outcome / Validation:** Rejected `line_items` — live field is `invoicelines`. Added `expectInvoiceDetail()` + `InvoiceApi.getInvoice()`. Pattern `^INV-\d{4}\d+$` matches INV-&lt;year&gt;&lt;seq&gt;.
+
+---
+
+### Entry 7 — Chain-of-thought (logout) + dead-end
+- **Prompt:** Think step-by-step: how does Toolshop invalidate a session on API and UI? Probe verbs on `/users/logout`, `/logout`, `/auth/logout`. Prove token death with the strongest protected call. Keep Core case count.
+- **AI Response Summary:** Suggested `POST /users/logout` then re-call `POST /carts`.
+- **Debugging Outcome / Validation (dead-end recorded):** POST `/users/logout` → **405**; `/logout` and `/auth/logout` → **404**. Correct path: **`GET /users/logout`** → 200. Cart `POST` still returned 201 without auth (weak proof). Pivot: assert `GET /users/me` 200 before logout and ≥401 after. UI: `nav-menu` → `nav-sign-out`. Deepened TC-UI-01/02 and API-AC1 smoke instead of adding cases.

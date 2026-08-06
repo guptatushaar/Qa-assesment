@@ -1,6 +1,6 @@
 /**
  * Account / profile / invoices page object.
- * Purpose: verify saved profile fields and list invoices after CoD checkout.
+ * Purpose: verify saved profile fields, list invoices after CoD checkout, and sign out.
  */
 class AccountPage {
   constructor(page) {
@@ -9,6 +9,8 @@ class AccountPage {
     this.lastName = page.locator('[data-test="last-name"]');
     this.email = page.locator('[data-test="email"]');
     this.invoicesLink = page.locator('[data-test="nav-my-invoices"]');
+    this.navMenu = page.locator('[data-test="nav-menu"]');
+    this.signOut = page.locator('[data-test="nav-sign-out"]');
     // Real invoice rows only — avoid empty-state / layout table rows.
     this.invoiceRows = page.locator('table tbody tr').filter({
       has: page.locator('a[href*="invoice"], [data-test="invoice-number"]'),
@@ -24,6 +26,13 @@ class AccountPage {
     await this.page.goto('/account/invoices');
     await this.page.waitForURL(/invoice/i, { timeout: 15000 });
     await this.page.getByRole('heading', { name: /invoices/i }).waitFor({ state: 'visible', timeout: 15000 });
+  }
+
+  /** Opens account menu and signs out — session should end on /auth/login. */
+  async logout() {
+    await this.navMenu.click();
+    await this.signOut.click();
+    await this.page.waitForURL(/auth\/login/i, { timeout: 15000 });
   }
 }
 

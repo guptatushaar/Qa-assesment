@@ -10,5 +10,7 @@ alwaysApply: true
 - Tag tests with `@smoke` or `@regression` in the title; stay within 5–8 cases per UI and API tier.
 - Cash on Delivery invoice requires **Confirm twice**; single Confirm is a regression assertion.
 - Invoice API payload must match the guide fixture (`billing_country: "TG"`).
+- After POST invoice, assert `GET /invoices/{id}` (`invoicelines`, billing match, `INV-<year><seq>`, totals).
+- Logout is `GET /users/logout` (not POST); prove token death via `GET /users/me` ≥401. UI: `nav-menu` → `nav-sign-out`.
 - Do not commit secrets; use synthetic faker users only.
 - Update `ai-prompts/` when debugging or redesigning — iterative evidence matters.

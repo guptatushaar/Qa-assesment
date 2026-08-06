@@ -25,3 +25,11 @@ Prompts used for README, project-info (Part A), and submission packaging.
 - **AI Response Summary:** Five markdown files with Prompt → Summary → Validation/Debug/Edits format.
 - **Edits You Made:** Kept entries concise; tied each to concrete files in the repo.
 - **Reason for Edits:** Show thoughtful AI use, not raw unreviewed dumps.
+
+---
+
+### Entry 4 — Rubric growth close-out
+- **Prompt:** Update README / project-info / execution-evidence / CSV for invoice GET detail + logout without breaking the 8+8+8 Core story.
+- **AI Response Summary:** Drafted new test IDs that would exceed the case cap.
+- **Edits You Made:** Deepened existing smoke titles/expectations instead; added Environment & data strategy table; recorded few-shot/CoT/dead-end prompt entries.
+- **Reason for Edits:** Evaluators want gap closure inside Core discipline, not suite bloat.

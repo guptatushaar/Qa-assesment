@@ -14,4 +14,7 @@ Use for this assessment when designing or fixing Toolshop UI/API tests.
 
 - Checkout steps: `proceed-1` → `proceed-2` → address → `proceed-3` → payment → `finish` ×2.
 - Cart JSON field for line items: `cart_items`.
+- Invoice detail field for lines: `invoicelines` (not `line_items`); number format `INV-<year><seq>`.
+- Logout API is **`GET /users/logout`** (POST → 405); prove token death via `GET /users/me` ≥401.
+- UI logout: `nav-menu` → `nav-sign-out`.
 - Negative register/login must pass `{ expectSuccess: false }`.

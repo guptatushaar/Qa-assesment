@@ -22,3 +22,10 @@ Prompts used to generate and refine UI + API scenarios (manual CSV + automation 
 - **Prompt:** Which negatives are Core vs Stretch for this assessment?
 - **AI Response Summary:** Core negatives = duplicate email, wrong password, incomplete billing, missing invoice field, invalid cart_id, single Confirm. Stretch would be search/filters/admin — out of scope.
 - **Validation Notes:** Did not expand into Stretch; Core evidence prioritized.
+
+---
+
+### Entry 4 — Review gap close (invoice detail + logout)
+- **Prompt:** Rubric growth areas: add GET invoice detail (lines, billing, INV format, totals) and logout (UI + API token invalidation) without exceeding 5–8 cases/tier. Update CSV + traceability.
+- **AI Response Summary:** Proposed new TC-UI-10 and API-AC2-07 (would break 8-cap).
+- **Validation Notes (rejected):** Deepen existing smoke instead — TC-UI-01/02 + logout; TC-UI-06 + INV assert; API-AC1 smoke + GET logout/`me`; API-AC2 smoke + GET `/invoices/{id}`. Updated TC-M-02/03/07/08 expected results in CSV.

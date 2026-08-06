@@ -1,5 +1,6 @@
 PrismStructure/node_modules/
 PrismStructure/test-results/
 PrismStructure/playwright-report/
+PrismStructure/execution-reports/artifacts/
 .env
 .DS_Store

@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { POManager } = require('../../UI/pageobjects/POManager');
 const { generateUniqueUser, uiBillingAddress } = require('../../commonUtils/utils');
+const { captureStep } = require('../../commonUtils/evidenceCapture');
 
 /**
  * UI-AC2: cart → checkout → Cash on Delivery.
@@ -24,7 +25,7 @@ async function registerLoginAndAddToCart(page, po) {
 }
 
 test.describe('UI-AC2 End-to-End Purchase Flow', () => {
-  test('TC-UI-05: add multiple items and update quantity recalculates totals @smoke', async ({ page }) => {
+  test('TC-UI-05: add multiple items and update quantity recalculates totals @smoke', async ({ page }, testInfo) => {
     const po = new POManager(page);
     await registerLoginAndAddToCart(page, po);
 
@@ -39,9 +40,10 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     const totalAfter = (await cartPage.cartTotal.textContent())?.trim() ?? '';
     expect(totalAfter.length).toBeGreaterThan(0);
     expect(totalAfter).not.toMatch(/^[$€]?\s*0([.,]0+)?$/);
+    await captureStep(page, testInfo, '05-cart-after-quantity-update');
   });
 
-  test('TC-UI-06: Cash on Delivery checkout with double confirm generates an invoice @smoke', async ({ page }) => {
+  test('TC-UI-06: Cash on Delivery checkout with double confirm generates an invoice @smoke', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = await registerLoginAndAddToCart(page, po);
 
@@ -55,14 +57,19 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     await checkoutPage.proceedToPaymentStep();
     await checkoutPage.selectCashOnDelivery();
     await checkoutPage.confirmTwice();
+    await captureStep(page, testInfo, '06-after-confirm-twice');
 
-    // AC2 evidence: invoice listed under My Invoices after second Confirm.
+    // AC2 evidence: invoice listed under My Invoices; number matches INV-<year><seq>.
+    // (Payment-page invoice-number is flaky — Confirm×2 may complete via POST /invoices alone.)
     const accountPage = po.getAccountPage();
     await accountPage.gotoMyInvoices();
     await expect(accountPage.invoiceRows.first()).toBeVisible({ timeout: 20000 });
+    const rowText = (await accountPage.invoiceRows.first().textContent())?.trim() ?? '';
+    expect(rowText, 'My Invoices row should contain INV-<year><seq>').toMatch(/INV-\d{4}\d+/);
+    await captureStep(page, testInfo, '06-my-invoices-with-invoice');
   });
 
-  test('TC-UI-07: a single Confirm click does not yet generate an invoice @regression', async ({ page }) => {
+  test('TC-UI-07: a single Confirm click does not yet generate an invoice @regression', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = await registerLoginAndAddToCart(page, po);
 
@@ -79,14 +86,16 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
     // Documents known app behavior: one Confirm is not enough for an invoice.
     await expect(checkoutPage.successMessage).toBeVisible();
     await expect(checkoutPage.invoiceNumber).not.toBeVisible();
+    await captureStep(page, testInfo, '07-after-confirm-once');
 
     // Stronger proof: My Invoices stays empty after Confirm×1 (new user has no prior invoices).
     const accountPage = po.getAccountPage();
     await accountPage.gotoMyInvoices();
     await expect(accountPage.invoiceRows).toHaveCount(0);
+    await captureStep(page, testInfo, '07-my-invoices-empty');
   });
 
-  test('TC-UI-08: checkout is blocked with an incomplete billing address @regression', async ({ page }) => {
+  test('TC-UI-08: checkout is blocked with an incomplete billing address @regression', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = await registerLoginAndAddToCart(page, po);
 
@@ -105,5 +114,6 @@ test.describe('UI-AC2 End-to-End Purchase Flow', () => {
       .poll(async () => checkoutPage.isProceedEnabled(), { timeout: 10000 })
       .toBeFalsy();
     await expect(checkoutPage.paymentMethodSelect).not.toBeVisible();
+    await captureStep(page, testInfo, '08-incomplete-billing-proceed-disabled');
   });
 });

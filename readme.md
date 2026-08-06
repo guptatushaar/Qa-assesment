@@ -83,18 +83,22 @@ npm run report
 
 Reports (open in browser if `npm run report` fails):  
 - HTML: `PrismStructure/execution-reports/html-report/index.html`  
-- JSON: `PrismStructure/execution-reports/results.json`
+- JSON: `PrismStructure/execution-reports/results.json`  
+- UI screenshots: `PrismStructure/execution-reports/screenshots/` (index: `INDEX.md`)
 
 > If you see `No report found at "execution-reports/html-report"`, you are in the wrong folder. Run `cd PrismStructure && npm run report`, or open the `index.html` path above.
+
+**Evidence collection:** UI runs capture end-of-test screenshots plus mid-step captures on key assertions; `npm test` auto-copies them into `execution-reports/screenshots/`.
 
 **Known SUT behavior:** press **Confirm twice** on Cash on Delivery to generate an invoice.
 
 ## Core scope (kept small on purpose)
 
-- UI: register/login/profile, cart quantity, CoD confirm×2 + My Invoices, negatives (duplicate email, bad password, empty password, confirm×1 → empty My Invoices, incomplete billing)
-- API: register/login/token/cart, products → `cart_items` → invoice with guide payload, contract negatives (missing field, bad `cart_id`, no token)
-- Limit: **5–8** cases per manual / UI / API tier including smoke + regression (current: **8 + 8 + 8**)
+- UI: register/login/profile/**logout**, cart quantity, CoD confirm×2 + **INV-<year><seq>** + My Invoices, negatives (duplicate email, bad password, empty password, confirm×1 → empty My Invoices, incomplete billing)
+- API: register/login/token/cart/**logout → /users/me ≥401**, products → `cart_items` → invoice + **`GET /invoices/{id}`** (invoicelines, billing match, INV format, totals), contract negatives
+- Limit: **5–8** cases per manual / UI / API tier including smoke + regression (current: **8 + 8 + 8**; gaps closed by deepening smoke, not adding cases)
 - Traceability: `FunctionalTestCase.csv` ↔ automation IDs; see **Manual ↔ automation** section in `project-info.md` (some auth/API negatives are automation-only by design)
+- Env: live demo by default; override with `UI_BASE_URL` / `API_BASE_URL` (see `project-info.md` Environment matrix)
 - Latest evidence: **16 passed** — see `execution-evidence.md` + `PrismStructure/execution-reports/`
 
 ## Evaluation alignment (how to read this repo)

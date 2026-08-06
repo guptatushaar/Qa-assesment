@@ -19,7 +19,7 @@ This is a Core QA mini-project that demonstrates an AI-assisted testing workflow
 
 ## Project Summary
 
-Focus is new-user registration, authenticated checkout, and invoice verification (UI My Invoices + API `/invoices`), with intentional negative paths for duplicate email, bad password, incomplete billing, and invalid invoice payloads.
+Focus is new-user registration, authenticated checkout, invoice verification (UI My Invoices + API `POST`/`GET /invoices/{id}` detail), and logout/token invalidation, with intentional negative paths for duplicate email, bad password, incomplete billing, and invalid invoice payloads.
 
 ## Tools Used
 
@@ -47,7 +47,7 @@ Focus is new-user registration, authenticated checkout, and invoice verification
 ### 3. How AI is used for test planning and strategy
 
 - **UI vs API:** UI for journey + visual invoice; API for auth token, cart integrity, invoice contract.
-- **Smoke:** happy-path register/login/profile, multi-item cart totals, CoD invoice, API register/login/cart, API invoice happy path.
+- **Smoke:** happy-path register/login/profile/logout, multi-item cart totals, CoD invoice + INV format, API register/login/cart/logout, API invoice + GET detail.
 - **Regression:** duplicate email, wrong password, single Confirm (no invoice yet), incomplete billing, missing billing field, invalid `cart_id`.
 
 ### 4. How AI is used for manual test case design
@@ -100,8 +100,18 @@ Focus is new-user registration, authenticated checkout, and invoice verification
 | Login | Invalid credentials still “succeed” in flaky waits | Negative tests use `expectSuccess: false` |
 | Cart | Race when adding products | Wait for toast **or** cart API response after add |
 | Checkout | Missing `proceed-2`; address incomplete | Explicit step clicks; incomplete-address regression + `expect.poll` on Proceed |
-| Invoice UI | Confirm once does not create invoice | Confirm×1 asserts payment page + empty My Invoices; Confirm×2 fails closed |
-| Invoice API | Wrong payload / empty cart | Fixture payload; assert `cart_items` property (no field-name fallbacks) |
+| Invoice UI | Confirm once does not create invoice | Confirm×1 asserts payment page + empty My Invoices; Confirm×2 fails closed; INV format asserted |
+| Invoice API | Wrong payload / empty cart / shallow id-only assert | Fixture payload; `cart_items`; `GET /invoices/{id}` for lines, billing, INV, totals |
+| Logout | Session / token still usable after Sign out | UI Sign out → login redirect; API `GET /users/logout` then `/users/me` ≥401 |
+
+## Environment & data strategy
+
+| Environment | UI base | API base | Notes |
+|-------------|---------|----------|-------|
+| Live demo (default) | `https://practicesoftwaretesting.com` | `https://api.practicesoftwaretesting.com` | Public SUT used for assessment evidence |
+| Override | `UI_BASE_URL` | `API_BASE_URL` | Set in shell / CI when pointing at another deploy |
+
+**Data cleanup:** each run uses unique `tushaarguptatest+<stamp>@gmail.com` users (no shared fixtures to delete). Carts/invoices are owned by that ephemeral user; no admin purge required on the public demo. Synthetic identity only — no secrets.
 
 ## Coverage Matrix (Smoke / Regression)
 
@@ -117,12 +127,13 @@ Manual CSV stays within the **5–8** guide cap and maps to ACs as follows:
 
 | Manual | Covers | Automation |
 |--------|--------|------------|
-| TC-M-01/02 | UI AC1 register/login/profile | TC-UI-01/02 |
-| TC-M-03 | UI AC2 cart qty + CoD confirm×2 + My Invoices | TC-UI-05 + TC-UI-06 |
+| TC-M-01/02 | UI AC1 register/login/profile/**logout** | TC-UI-01/02 |
+| TC-M-03 | UI AC2 cart qty + CoD confirm×2 + **INV format** + My Invoices | TC-UI-05 + TC-UI-06 |
 | TC-M-04 | Duplicate email | TC-UI-03 |
 | TC-M-05 | Incomplete billing / invalid transition | TC-UI-08 |
 | TC-M-06 | Confirm×1 quirk (no invoice yet) | TC-UI-07 |
-| TC-M-07/08 | API AC1 + AC2 happy path | API-AC1-01/02/03, API-AC2-01/02/03 |
+| TC-M-07 | API AC1 register/login/cart/**logout token kill** | API-AC1-01/02/03 |
+| TC-M-08 | API AC2 products/cart/invoice/**GET detail** | API-AC2-01/02/03 |
 
 **Automation-only regressions** (kept out of CSV to stay ≤8 manual rows; still in PrismStructure with `@regression`):
 

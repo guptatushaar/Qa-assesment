@@ -27,8 +27,10 @@
 | 3 | “Fix register: country label is `Netherlands (the)`; use postcode lookup order” | Grounded in Playwright snapshot, not guessed DOM |
 | 4 | “Assert `cart_items` not `cart_products`; keep invoice `billing_country: TG`” | Validated against OpenAPI + assessment fixture |
 | 5 | “Fail-closed Confirm×2; TC-UI-07 empty My Invoices; no cart field fallbacks” | Closed false-pass gaps found in code review + live re-run |
+| 6 | Few-shot: “Given POST invoice body → GET /invoices/{id} sample JSON, write expectInvoiceDetail for invoicelines + INV-<year><seq>” | Shifted from review-and-refine to few-shot against live response |
+| 7 | CoT: “Step through logout: which HTTP verb? What proves token death without relying on cart POST?” | Discovered GET /users/logout (POST 405); assert `/users/me` ≥401 |
 
-Pattern used: **Goal → Constraints → Inputs (files/URLs/errors) → Definition of done → Ask AI to list assumptions**.
+Pattern used: **Goal → Constraints → Inputs (files/URLs/errors) → Definition of done → Ask AI to list assumptions**. Also used **few-shot** (live JSON samples) and **chain-of-thought** (logout verb/effect reasoning).
 
 ## How I validate AI output (mandatory gate)
 

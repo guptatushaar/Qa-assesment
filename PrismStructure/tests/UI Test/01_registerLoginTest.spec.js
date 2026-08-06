@@ -1,13 +1,14 @@
 const { test, expect } = require('@playwright/test');
 const { POManager } = require('../../UI/pageobjects/POManager');
 const { generateUniqueUser, INVALID_PASSWORD, EMAIL_LOCAL } = require('../../commonUtils/utils');
+const { captureStep } = require('../../commonUtils/evidenceCapture');
 
 /**
  * UI-AC1: registration, login, and auth negatives.
  * Happy path proves profile persistence; regressions cover duplicate email / bad password / empty password.
  */
 test.describe('UI-AC1 User Registration & Login', () => {
-  test('TC-UI-01/02: register, log in, verify saved profile info @smoke', async ({ page }) => {
+  test('TC-UI-01/02: register, log in, verify profile, then logout @smoke', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = generateUniqueUser();
 
@@ -15,6 +16,7 @@ test.describe('UI-AC1 User Registration & Login', () => {
     await registerPage.goto();
     await registerPage.registerWith(user);
     await expect(page).toHaveURL(/login/);
+    await captureStep(page, testInfo, '01-after-register-login-page');
 
     const loginPage = po.getLoginPage();
     await loginPage.goto();
@@ -25,9 +27,17 @@ test.describe('UI-AC1 User Registration & Login', () => {
     await expect(accountPage.firstName).toHaveValue(user.first_name);
     await expect(accountPage.lastName).toHaveValue(user.last_name);
     await expect(accountPage.email).toHaveValue(user.email);
+    await captureStep(page, testInfo, '02-profile-verified');
+
+    // Lifecycle close-out: Sign out returns to login; profile is no longer reachable.
+    await accountPage.logout();
+    await expect(page).toHaveURL(/auth\/login/);
+    await captureStep(page, testInfo, '02-after-logout-login-page');
+    await page.goto('/account/profile');
+    await expect(page).toHaveURL(/auth\/login/);
   });
 
-  test('TC-UI-03: registering with an already-used email is rejected @regression', async ({ page }) => {
+  test('TC-UI-03: registering with an already-used email is rejected @regression', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = generateUniqueUser();
 
@@ -40,9 +50,10 @@ test.describe('UI-AC1 User Registration & Login', () => {
     await registerPage.registerWith(user, { expectSuccess: false });
     await expect(registerPage.registerError).toBeVisible();
     await expect(registerPage.duplicateEmailMessage).toBeVisible();
+    await captureStep(page, testInfo, '03-duplicate-email-error');
   });
 
-  test('TC-UI-04: login with incorrect password is rejected @regression', async ({ page }) => {
+  test('TC-UI-04: login with incorrect password is rejected @regression', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const user = generateUniqueUser();
 
@@ -55,9 +66,10 @@ test.describe('UI-AC1 User Registration & Login', () => {
     await loginPage.loginAs(user.email, INVALID_PASSWORD, { expectSuccess: false });
     await expect(loginPage.error).toBeVisible();
     await expect(page).toHaveURL(/login/);
+    await captureStep(page, testInfo, '04-wrong-password-error');
   });
 
-  test('TC-UI-09: login with empty password is blocked by validation @regression', async ({ page }) => {
+  test('TC-UI-09: login with empty password is blocked by validation @regression', async ({ page }, testInfo) => {
     const po = new POManager(page);
     const loginPage = po.getLoginPage();
     await loginPage.goto();
@@ -67,5 +79,6 @@ test.describe('UI-AC1 User Registration & Login', () => {
     await loginPage.submit.click();
     await expect(page).toHaveURL(/login/);
     await expect(page.getByText(/Password is required/i)).toBeVisible();
+    await captureStep(page, testInfo, '09-empty-password-validation');
   });
 });

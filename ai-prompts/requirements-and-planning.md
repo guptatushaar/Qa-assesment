@@ -22,3 +22,10 @@ Record of iterative prompts used to understand Toolshop flows, risks, and the te
 - **Prompt:** Propose folder structure matching “What Counts as Complete” (FunctionalTestCase, PrismStructure, project-info, readme, ai-prompts, .cursor).
 - **AI Response (short summary):** Root artifacts + `PrismStructure/` for Playwright; `ai-prompts/` for history; `.cursor/rules` + skills for reusable workflow.
 - **Validation Notes:** Applied structure; kept automation count within 5–8 per tier.
+
+---
+
+### Entry 4 — Environment matrix (CoT)
+- **Prompt:** Reason about env strategy for a public demo SUT: what is default vs override? How do we avoid leftover test users without admin delete APIs?
+- **AI Response (short summary):** Suggested staging fallback hostname that does not exist for Toolshop.
+- **Validation Notes (pivot):** Document live demo as default; `UI_BASE_URL` / `API_BASE_URL` overrides for future deploys; cleanup via unique email stamps (no shared mutable fixtures). Recorded in `project-info.md` Environment & data strategy.

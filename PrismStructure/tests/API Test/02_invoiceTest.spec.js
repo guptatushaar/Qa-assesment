@@ -3,9 +3,9 @@ const { AuthApi } = require('../../API/pageobjects/authApi');
 const { CartApi } = require('../../API/pageobjects/cartApi');
 const { InvoiceApi } = require('../../API/pageobjects/invoiceApi');
 const { generateUniqueUser, validInvoicePayload } = require('../../commonUtils/utils');
-const { retryOnServerError } = require('../../commonUtils/testHelpers');
+const { retryOnServerError, expectInvoiceDetail } = require('../../commonUtils/testHelpers');
 
-// API-AC2: products → cart_items → invoice (guide fixture) + contract negatives.
+// API-AC2: products → cart_items → invoice (guide fixture) + GET detail + contract negatives.
 
 /** Registers, logs in, creates a cart, and adds one product — shared AC2 precondition. */
 async function setupAuthenticatedCartWithProduct(request) {
@@ -41,7 +41,7 @@ async function setupAuthenticatedCartWithProduct(request) {
 }
 
 test.describe('API-AC2 Product Selection & Invoice Generation', () => {
-  test('API-AC2-01/02/03: retrieve products, build cart, generate invoice @smoke', async ({ request }) => {
+  test('API-AC2-01/02/03: retrieve products, build cart, generate invoice, GET detail @smoke', async ({ request }) => {
     const cartApi = new CartApi(request);
     const invoiceApi = new InvoiceApi(request);
 
@@ -54,10 +54,18 @@ test.describe('API-AC2 Product Selection & Invoice Generation', () => {
     expect(cartBody).toHaveProperty('cart_items');
     expect(cartBody.cart_items.length).toBeGreaterThan(0);
 
-    const invoiceRes = await invoiceApi.generateInvoice(validInvoicePayload(cartId), token);
+    const payload = validInvoicePayload(cartId);
+    const invoiceRes = await invoiceApi.generateInvoice(payload, token);
     expect(invoiceRes.status(), 'invoice generation should succeed with a valid payload').toBeLessThan(300);
     const invoiceBody = await invoiceRes.json();
-    expect(invoiceBody.id ?? invoiceBody.invoice_id).toBeTruthy();
+    const invoiceId = invoiceBody.id ?? invoiceBody.invoice_id;
+    expect(invoiceId).toBeTruthy();
+
+    // Detail verification: line items, billing match, INV-<year><seq>, totals.
+    const detailRes = await invoiceApi.getInvoice(invoiceId, token);
+    expect(detailRes.status(), 'GET /invoices/{id} should succeed').toBe(200);
+    const detail = await detailRes.json();
+    expectInvoiceDetail(expect, detail, payload);
   });
 
   test('API-AC2-04: invoice generation rejects missing required billing field @regression', async ({ request }) => {
