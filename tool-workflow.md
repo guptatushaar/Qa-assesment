@@ -15,7 +15,7 @@
 
 1. Paste **only the relevant slice** of the participant guide (AC1/AC2, invoice payload, structure rules) — not the entire PDF every time.
 2. Point at concrete paths (`PrismStructure/UI/pageobjects/...`, OpenAPI invoice schema, failing `error-context.md`).
-3. State constraints up front: Core only, 5–8 cases/tier, `@smoke`/`@regression`, confirm×2 quirk, synthetic user **Ritika Bansal** / `ritikabansaltest+…@gmail.com` only.
+3. State constraints up front: Core only, 5–8 cases/tier, `@smoke`/`@regression`, confirm×2 quirk, public synthetic data only.
 4. Prefer **one task per chat** (planning ≠ coding ≠ debugging) to keep prompts reusable for `ai-prompts/`.
 
 ## How I write / refine prompts

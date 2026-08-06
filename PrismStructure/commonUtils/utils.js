@@ -6,8 +6,8 @@ const path = require('path');
  * specs do not drift (hardcoded copies caused Canada/UttarP/2134AB mismatches).
  */
 
-/** Email local-part used for unique Gmail +tag addresses (ritikabansaltest@gmail.com). */
-const EMAIL_LOCAL = 'ritikabansaltest';
+/** Email local-part used for unique Gmail +tag addresses. */
+const EMAIL_LOCAL = 'tushaarguptatest';
 
 /** Strong password that satisfies API rules (upper, lower, digit, symbol). */
 const VALID_PASSWORD = 'Valid#12345';
@@ -32,8 +32,8 @@ const invoiceFixture = require(path.join(__dirname, '../API/testdata/invoicePayl
 function generateUniqueUser() {
   const stamp = `${Date.now()}${Math.floor(Math.random() * 10000)}`;
   return {
-    first_name: 'Ritika',
-    last_name: 'Bansal',
+    first_name: 'Tushaar',
+    last_name: 'Gupta',
     email: `${EMAIL_LOCAL}+${stamp}@gmail.com`,
     password: VALID_PASSWORD,
     dob: '1997-12-08',

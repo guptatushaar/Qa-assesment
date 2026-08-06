@@ -3,8 +3,6 @@
 Base URL: `https://api.practicesoftwaretesting.com`  
 Auth: Bearer `access_token` from `POST /users/login`
 
-**Synthetic user:** Ritika Bansal · password `Valid#12345` · email `ritikabansaltest+<stamp>@gmail.com` (from `commonUtils/utils.js`).
-
 ## AC1 — User Authentication & Cart Creation
 
 | ID | Tag | Scenario | Request outline | Expected |

@@ -91,17 +91,6 @@ Reports (open in browser if `npm run report` fails):
 
 **Known SUT behavior:** press **Confirm twice** on Cash on Delivery to generate an invoice.
 
-## Test data identity
-
-| Field | Value |
-|-------|--------|
-| First / last name | Ritika / Bansal |
-| Password | `Valid#12345` |
-| Email base | `ritikabansaltest@gmail.com` |
-| Runtime emails | `ritikabansaltest+<stamp>@gmail.com` (unique per run) |
-
-Source of truth: `PrismStructure/commonUtils/utils.js` (`generateUniqueUser()`). Manual CSV and API scenarios use the same identity pattern.
-
 ## Core scope (kept small on purpose)
 
 - UI: register/login/profile/**logout**, cart quantity, CoD confirm×2 + **INV-<year><seq>** + My Invoices, negatives (duplicate email, bad password, empty password, confirm×1 → empty My Invoices, incomplete billing)
