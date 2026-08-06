@@ -1,6 +1,6 @@
 /**
- * Checkout billing + payment page object.
- * Purpose: address step (proceed-3), Cash on Delivery, and Confirm×1 / Confirm×2 flows.
+ * Checkout billing + payment.
+ * SUT quirk: Confirm×1 shows success toast; Confirm×2 creates the invoice.
  */
 const { countryOptionLabel } = require('../../commonUtils/testHelpers');
 
@@ -113,8 +113,7 @@ class CheckoutPage {
    * Fails closed unless invoice-number appears or POST /invoices succeeds.
    */
   async confirmTwice() {
-    await this.confirmButton.click();
-    await this.successMessage.waitFor({ state: 'visible', timeout: 15000 });
+    await this.confirmOnce();
 
     // Listen before the second click — do not race against successMessage from Confirm #1.
     const invoiceCreated = Promise.race([

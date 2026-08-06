@@ -1,13 +1,9 @@
-/**
- * Product catalog page object.
- * Purpose: open products and add in-stock items to cart for checkout flows.
- */
+/** Product catalog — open products and add in-stock items to cart. */
 class ProductsPage {
   constructor(page) {
     this.page = page;
     this.productCard = page.locator('[data-test="product-name"]');
     this.addToCartButton = page.locator('[data-test="add-to-cart"]');
-    this.toast = page.locator('.toast-body');
   }
 
   async goto() {

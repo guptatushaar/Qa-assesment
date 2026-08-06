@@ -50,3 +50,10 @@ Prompts for Prism/Playwright structure, assertions, and failure analysis.
 - **Prompt:** Review PrismStructure for false-pass risks and flakes; fix minimal Core issues; re-run suite; sync docs.
 - **AI Response Summary:** Flagged stale toast on 2nd add-to-cart, Confirm×1 `toHaveCount(0)` race, API-AC1-05 missing register assert, ≥400 accepting 5xx, unbounded register waitFor, proceed-2 no wait, headed npm arg drift.
 - **Debugging Outcome:** Wait cart **response** (not toast); Confirm×1 empty-window race; register status + no `access_token` on bad login; `expectClientError` 4xx band; register `waitFor` 15s; wait `proceed-2`; root `test:headed` → PrismStructure script; docs aligned.
+
+---
+
+### Entry 9 — Cleanup / optimize
+- **Prompt:** Clean and optimize PrismStructure code if required (no coverage expansion).
+- **AI Response Summary:** Dead locators (`toast`, `invoicesLink`), unused exports (`VALID_PASSWORD`/`WEAK_PASSWORD`/`INV_NUMBER_PATTERN`), unused logger levels, `confirmTwice` duplicating `confirmOnce`, optional-auth header boilerplate, `path.join` for JSON require, noisy cart `goto`.
+- **Debugging Outcome / Validation:** Applied minimal DRY; behavior unchanged. Re-run `npm test` from PrismStructure.

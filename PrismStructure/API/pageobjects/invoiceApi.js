@@ -6,14 +6,12 @@ class InvoiceApi {
   }
 
   generateInvoice(payload, token) {
-    const headers = token ? this.api.authHeader(token) : {};
-    return this.api.post('/invoices', payload, headers);
+    return this.api.post('/invoices', payload, this.api.optionalAuth(token));
   }
 
   /** GET /invoices/{id} — detail for line items, totals, billing, INV- number. */
   getInvoice(invoiceId, token) {
-    const headers = token ? this.api.authHeader(token) : {};
-    return this.api.get(`/invoices/${invoiceId}`, headers);
+    return this.api.get(`/invoices/${invoiceId}`, this.api.optionalAuth(token));
   }
 }
 

@@ -1,6 +1,6 @@
 # UI execution screenshots
 
-Collected: **2026-08-06T07:21:24.107Z**
+Collected: **2026-08-06T11:16:49.532Z**
 Count: **8**
 
 Source: Playwright `screenshot: on` artifacts under `execution-reports/artifacts/`, copied here for assessment review.

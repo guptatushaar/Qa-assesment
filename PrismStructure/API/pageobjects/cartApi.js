@@ -6,18 +6,19 @@ class CartApi {
   }
 
   createCart(token) {
-    const headers = token ? this.api.authHeader(token) : {};
-    return this.api.post('/carts', {}, headers);
+    return this.api.post('/carts', {}, this.api.optionalAuth(token));
   }
 
   addProduct(cartId, productId, quantity, token) {
-    const headers = token ? this.api.authHeader(token) : {};
-    return this.api.post(`/carts/${cartId}`, { product_id: productId, quantity }, headers);
+    return this.api.post(
+      `/carts/${cartId}`,
+      { product_id: productId, quantity },
+      this.api.optionalAuth(token),
+    );
   }
 
   getCart(cartId, token) {
-    const headers = token ? this.api.authHeader(token) : {};
-    return this.api.get(`/carts/${cartId}`, headers);
+    return this.api.get(`/carts/${cartId}`, this.api.optionalAuth(token));
   }
 
   getProducts() {

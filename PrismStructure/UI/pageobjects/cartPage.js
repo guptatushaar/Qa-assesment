@@ -1,7 +1,4 @@
-/**
- * Cart page object.
- * Purpose: line quantities, totals, and checkout step navigation (proceed-1 → proceed-2).
- */
+/** Cart — quantities, totals, proceed-1 → proceed-2. */
 class CartPage {
   constructor(page) {
     this.page = page;
@@ -13,11 +10,9 @@ class CartPage {
   }
 
   async goto() {
-    if (await this.navCart.isVisible().catch(() => false)) {
-      await this.navCart.click({ timeout: 10000 }).catch(async () => {
-        await this.page.goto('/checkout');
-      });
-    } else {
+    try {
+      await this.navCart.click({ timeout: 10000 });
+    } catch {
       await this.page.goto('/checkout');
     }
     await this.page.waitForURL(/checkout/, { timeout: 15000 });

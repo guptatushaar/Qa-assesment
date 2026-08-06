@@ -1,8 +1,6 @@
-const path = require('path');
-
 /**
  * Shared test-data helpers for UI + API.
- * Purpose: one place for identity, negative credentials, and invoice billing so
+ * One place for identity, negative credentials, and invoice billing so
  * specs do not drift (hardcoded copies caused Canada/UttarP/2134AB mismatches).
  */
 
@@ -23,7 +21,7 @@ const WEAK_PASSWORD = 'weak';
  * billing_country TG + Florida + 1234AA is accepted by POST /invoices;
  * arbitrary state/postal (e.g. UttarP / 2134AB) returns 422.
  */
-const invoiceFixture = require(path.join(__dirname, '../API/testdata/invoicePayload.json'));
+const invoiceFixture = require('../API/testdata/invoicePayload.json');
 
 /**
  * Builds a fresh registrant for each test run.
@@ -54,7 +52,7 @@ function generateUniqueUser() {
  * UI checkout billing fields — derived from the same user profile the SUT pre-fills.
  * Optional streetOverride keeps the preferred billing street without duplicating the object.
  */
-function uiBillingAddress(user = generateUniqueUser(), streetOverride = invoiceFixture.billing_street) {
+function uiBillingAddress(user, streetOverride = invoiceFixture.billing_street) {
   return {
     street: streetOverride,
     house_number: user.address.house_number,
@@ -84,9 +82,7 @@ function weakPasswordUser() {
 
 module.exports = {
   EMAIL_LOCAL,
-  VALID_PASSWORD,
   INVALID_PASSWORD,
-  WEAK_PASSWORD,
   generateUniqueUser,
   uiBillingAddress,
   validInvoicePayload,

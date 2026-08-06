@@ -1,14 +1,10 @@
-/**
- * Account / profile / invoices page object.
- * Purpose: verify saved profile fields, list invoices after CoD checkout, and sign out.
- */
+/** Account profile, My Invoices list, and nav sign-out. */
 class AccountPage {
   constructor(page) {
     this.page = page;
     this.firstName = page.locator('[data-test="first-name"]');
     this.lastName = page.locator('[data-test="last-name"]');
     this.email = page.locator('[data-test="email"]');
-    this.invoicesLink = page.locator('[data-test="nav-my-invoices"]');
     this.navMenu = page.locator('[data-test="nav-menu"]');
     this.signOut = page.locator('[data-test="nav-sign-out"]');
     // Real invoice rows only — avoid empty-state / layout table rows.

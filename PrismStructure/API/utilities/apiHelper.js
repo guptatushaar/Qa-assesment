@@ -7,8 +7,7 @@ class ApiHelper {
 
   async post(endpoint, data, headers = {}) {
     logger.step(`POST ${endpoint}`);
-    const res = await this.request.post(endpoint, { data, headers });
-    return res;
+    return this.request.post(endpoint, { data, headers });
   }
 
   async get(endpoint, headers = {}) {
@@ -18,6 +17,11 @@ class ApiHelper {
 
   authHeader(token) {
     return { Authorization: `Bearer ${token}` };
+  }
+
+  /** Bearer header when token is set; empty object for anonymous calls. */
+  optionalAuth(token) {
+    return token ? this.authHeader(token) : {};
   }
 }
 

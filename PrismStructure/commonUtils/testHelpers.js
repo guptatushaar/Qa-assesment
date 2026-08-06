@@ -55,7 +55,6 @@ function expectClientError(expect, status, message) {
 module.exports = {
   retryOnServerError,
   countryOptionLabel,
-  INV_NUMBER_PATTERN,
   expectInvoiceDetail,
   expectClientError,
 };
